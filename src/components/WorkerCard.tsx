@@ -1,6 +1,6 @@
 'use client'
 
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import Image from 'next/image'
 import { WorkerType } from '@/types/workers'
 import { Star, MapPin, Clock } from 'lucide-react'
@@ -11,28 +11,41 @@ interface WorkerCardProps {
 }
 
 const WorkerCard = memo(function WorkerCard({ worker, priority = false }: WorkerCardProps) {
+  const [imageError, setImageError] = useState(false)
+  
   const formattedPrice = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
     maximumFractionDigits: 0,
   }).format(worker.pricePerDay)
 
+  const fallbackImageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(worker.name)}&background=000000&color=ffffff&size=400`
+
   return (
     <article className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 ease-in-out border border-gray-100 hover:border-blue-200 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2">
       {/* Image Container */}
       <div className="relative h-48 sm:h-56 overflow-hidden bg-gray-100">
-        <Image
-          src={worker.image}
-          alt={`${worker.name} - ${worker.service}`}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
-          priority={priority}
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(worker.name)}&background=000000&color=ffffff&size=400`;
-          }}
-        />
+        {imageError ? (
+          <Image
+            src={fallbackImageUrl}
+            alt={`${worker.name} - ${worker.service}`}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+            priority={priority}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          />
+        ) : (
+          <Image
+            src={worker.image}
+            alt={`${worker.name} - ${worker.service}`}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+            priority={priority}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            onError={() => setImageError(true)}
+            unoptimized
+          />
+        )}
         
         {/* Service Badge */}
         <div className="absolute top-3 left-3">
