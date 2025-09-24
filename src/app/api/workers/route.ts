@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sortBy') || 'name'
 
     // Filter workers
-    let filteredWorkers: WorkerType[] = workersData
+    const filteredWorkers: WorkerType[] = workersData
       .filter((worker: WorkerType) => worker.pricePerDay > 0)
       .filter((worker: WorkerType) => worker.id !== null)
       .filter((worker: WorkerType) => {
