@@ -1,3 +1,4 @@
+import React from 'react'
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import WorkersPage from '@/app/page'
 
@@ -104,8 +105,31 @@ describe('WorkersPage', () => {
   })
 
   it('supports pagination boundaries (First/Prev disabled on page 1, Next/Last navigate)', async () => {
+    // Override fetch for this test to return many workers (ensure totalPages > 1)
+    const bigList = Array.from({ length: 25 }).map((_, i) => ({
+      id: i + 1,
+      name: `Worker ${i + 1}`,
+      service: i % 2 === 0 ? 'Chef' : 'Cleaner',
+      pricePerDay: 300 + (i % 10) * 10,
+      image: 'https://randomuser.me/api/portraits/men/2.jpg',
+    }))
+
+    // @ts-expect-error test override
+    global.fetch = vi.fn((url: RequestInfo | URL) => {
+      const u = String(url)
+      if (u.includes('/api/workers')) {
+        return Promise.resolve({ ok: true, json: async () => ({ success: true, data: bigList }) } as Response)
+      }
+      if (u.includes('/api/services')) {
+        return Promise.resolve({ ok: true, json: async () => ({ success: true, data: ['Chef', 'Cleaner'] }) } as Response)
+      }
+      return Promise.reject(new Error('Unknown URL'))
+    })
+
     render(<WorkersPage />)
-    await screen.findByText('Alice')
+
+    // Wait for a specific item (exact match to avoid matching Worker 10/11...)
+    await screen.findByText(/^Worker 1$/)
 
     const firstBtn = screen.getByRole('button', { name: /first page/i })
     const prevBtn = screen.getByRole('button', { name: /previous page/i })
@@ -118,14 +142,13 @@ describe('WorkersPage', () => {
     // Move to next page
     fireEvent.click(nextBtn)
     await waitFor(() => {
-      // Summary should show page 2 of N
       expect(screen.getByRole('status')).toHaveTextContent(/page 2 of/i)
     })
 
     // Jump to last page
     fireEvent.click(lastBtn)
     await waitFor(() => {
-      expect(screen.getByRole('status')).toHaveTextContent(/page .* of .*$/i)
+      expect(screen.getByRole('status')).toHaveTextContent(/page \d+ of \d+/i)
     })
   })
 
