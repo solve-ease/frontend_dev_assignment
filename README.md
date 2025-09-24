@@ -62,7 +62,7 @@ This assignment is designed to assess your practical skills in **React, Next.js,
 
 ## Deliverables  
 1. Fork the assignment repo, make changes there.
-2. Fill in the google form with your details for submission.
+2. Fill in the [Google form](https://forms.gle/NnZEwMcHH2dJ59zJ8) with your details for submission.
 
 ---
 
