@@ -28,6 +28,10 @@ const WorkerCard = memo(function WorkerCard({ worker, priority = false }: Worker
           className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
           priority={priority}
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(worker.name)}&background=000000&color=ffffff&size=400`;
+          }}
         />
         
         {/* Service Badge */}
