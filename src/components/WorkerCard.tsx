@@ -1,6 +1,6 @@
 'use client'
 
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import Image from 'next/image'
 import { WorkerType } from '@/types/workers'
 import { Star, MapPin, Clock } from 'lucide-react'
@@ -11,26 +11,33 @@ interface WorkerCardProps {
 }
 
 const WorkerCard = memo(function WorkerCard({ worker, priority = false }: WorkerCardProps) {
+  const [imageError, setImageError] = useState(false)
+  
   const formattedPrice = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
     maximumFractionDigits: 0,
   }).format(worker.pricePerDay)
 
-  // Generate reliable avatar image that works on all platforms
-  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(worker.name)}&background=random&size=400&format=png`
+  // Use the original randomuser.me image from the worker data
+  const imageUrl = worker.image
+  
+  // Fallback avatar if randomuser.me fails
+  const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(worker.name)}&background=random&size=400&format=png`
 
   return (
     <article className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 ease-in-out border border-gray-100 hover:border-blue-200 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2">
       {/* Image Container */}
       <div className="relative h-48 sm:h-56 overflow-hidden bg-gray-100">
         <Image
-          src={avatarUrl}
+          src={imageError ? fallbackUrl : imageUrl}
           alt={`${worker.name} - ${worker.service}`}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
           priority={priority}
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          unoptimized
+          onError={() => setImageError(true)}
         />
         
         {/* Service Badge */}
