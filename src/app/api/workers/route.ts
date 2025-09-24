@@ -5,7 +5,7 @@ export async function GET() {
   try {
     return NextResponse.json({
       success: true,
-      data: workersData
+      data: workersDat
     })
   } catch (error) {
     console.error('API Error:', error)
