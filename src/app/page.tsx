@@ -136,7 +136,7 @@ export default function WorkersPage() {
             <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Something went wrong</h2>
             <p className="text-gray-600 text-center max-w-md">
-              We're having trouble loading the workers data. Please try refreshing the page.
+              We&apos;re having trouble loading the workers data. Please try refreshing the page.
             </p>
             <button
               onClick={() => window.location.reload()}
@@ -253,8 +253,8 @@ export default function WorkersPage() {
                 <Users className="h-5 w-5 text-white" />
               </div>
               <div>
-                <span className="text-lg font-semibold text-black">Worker's Spot</span>
-                <p className="text-gray-600 text-sm">© 2025 Worker's Spot. All Rights Reserved</p>
+                <span className="text-lg font-semibold text-black">Worker&apos;s Spot</span>
+                <p className="text-gray-600 text-sm">© 2025 Worker&apos;s Spot. All Rights Reserved</p>
               </div>
             </div>
 

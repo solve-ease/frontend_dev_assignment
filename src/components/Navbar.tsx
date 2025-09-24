@@ -11,10 +11,6 @@ interface NavbarProps {
 export default function Navbar({ onSearchChange, searchValue = '' }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange?.(e.target.value)
   }
@@ -29,7 +25,7 @@ export default function Navbar({ onSearchChange, searchValue = '' }: NavbarProps
               <div className="bg-black p-2 rounded-lg">
                 <Users className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-black">Worker's Spot</span>
+              <span className="text-xl font-bold text-black">Worker&apos;s Spot</span>
             </div>
           </div>
 
