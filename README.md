@@ -83,3 +83,117 @@ This assignment is designed to assess your practical skills in **React, Next.js,
 - Document any **extra improvements** you make in your submission.
 
 Good luck 🚀  
+
+---
+
+# Implementation Summary
+
+- Sticky navbar via `src/components/Navbar.tsx`, included in `src/app/layout.tsx`.
+- API integration: frontend fetches from `/api/workers`; old JSON import kept commented in `src/app/page.tsx`.
+- Loading skeletons and error state with Retry.
+- Session-based caching and memoized derived lists.
+- Pagination (12/page) with accessible controls.
+- Filters: service (from `/api/services`) + min/max price, integrated with pagination.
+- Accessibility: main landmark, list semantics, focus-visible, polite results summary.
+- UI: neutral dark background, white cards, improved contrast.
+- Tests: Vitest + RTL covering loading/success, filter, and error retry flows.
+
+---
+
+# Quick Start
+
+## Install
+```
+npm install
+```
+
+## Dev
+```
+npm run dev
+# open http://localhost:3000
+```
+
+## Build & Start
+```
+npm run build
+npm start
+```
+
+---
+
+# Scripts
+- dev: start Next dev server
+- build: production build
+- start: run built server
+- lint: run ESLint
+- test: run Vitest once
+- test:watch: run Vitest in watch mode
+
+---
+
+# Tech & Structure
+- Next.js (App Router) + React 19 + TypeScript
+- Tailwind CSS v4
+- API routes: `src/app/api/workers/route.ts`, `src/app/api/services/route.ts`
+- Page: `src/app/page.tsx`
+- Components: `src/components/` (`Navbar.tsx`, `Pagination.tsx`, `Filters.tsx`)
+
+---
+
+# API Endpoints
+- `GET /api/workers` — workers list (from `workers.json`)
+- `GET /api/services` — unique services (optionally `?stats=true` for stats)
+
+---
+
+# Testing
+
+## Stack
+- Vitest + React Testing Library + jsdom
+
+## Files
+- `vitest.config.ts`
+- `src/test/setup.ts`
+- `src/test/page.test.tsx`
+
+## Run
+```
+npm run test
+npm run test:watch
+```
+
+## Current Coverage
+- Loading → success
+- Service filter → results summary
+- Error state → Retry
+
+## Planned
+- Pagination boundaries
+- Price range clamping
+- A11y smoke checks
+
+---
+
+# Decisions
+- Keep JSON import commented (per assignment) to show migration.
+- Use sessionStorage for simple session cache; consider SWR later.
+- Memoize derived lists for performance.
+- A11y-first roles/labels and focus-visible.
+
+---
+
+# Deployment Guide (Vercel)
+
+1. Push your branch (`assignment/<your-full-name>`) to GitHub.
+2. On Vercel: New Project → Import repo.
+3. Framework preset: Next.js (defaults fine).
+4. Deploy. Copy the URL.
+5. Add the URL to this README and submit the Google Form.
+
+Notes: `next.config.ts` allows images from `randomuser.me`. Update if adding more domains.
+
+---
+
+# Submission
+- Branch name format respected.
+- Fill the provided Google Form with repo + deployed link.
