@@ -61,15 +61,17 @@ This assignment is designed to assess your practical skills in **React, Next.js,
 ---
 
 ## Deliverables  
-1. Fork the assignment repo, make changes there.
-2. Fill in the Goggle Form with your details for submission.
+1. Fork the repo and work from a branch named: assignment/<your-full-name> (for example: assignment/adarsh-maurya).
+2. Implement improvements and features that demonstrate your mastery of the job requirements (UI polish, responsiveness, Tailwind usage, tests, accessibility, performance).
+3. Push your branch to GitHub, add a clear README, and (strongly recommended) deploy the app (Vercel/Netlify/GH Pages)
+3. Fill in the Google Form with your details for submission.
 
 ---
 
 ## Evaluation Criteria  
 - Code quality, readability, and structure.  
 - UI/UX improvements and responsiveness.  
-- Correctness of functionality (filters, pagination, sticky navbar, optimizations).  
+- Correctness of functionality (filters, pagination, sticky navbar, optimisations).  
 - Debugging and problem-solving approach.  
 - Git usage and commit practices.  
 - Handling of API calls, loading states, and error cases.  
