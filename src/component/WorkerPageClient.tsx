@@ -28,7 +28,7 @@ export default function WorkersPageClient() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await import("../../workers.json");
+        const response = await import("../../public/workers.json");
         setWorkersData(response.default);
         setPriceFilter(
           Math.max(

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import workersData from '../../../../workers.json'
+import workersData from "../../../../public/workers.json"
 
 // GET /api/services
 export async function GET(request: NextRequest) {
