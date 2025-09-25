@@ -44,29 +44,29 @@
 ## 8. Add Unit Tests
 - [x] Install Jest and @testing-library/react
 - [x] Write tests for WorkerCard component
-- [ ] Write tests for Filters component
+- [x] Write tests for Filters component
 - [x] Write tests for Pagination component
 - [x] Add test script to package.json
 
 ## 9. Testing and Bug Fixes
 - [x] Run npm run dev
 - [x] Test locally: responsiveness, API, filters, pagination
-- [ ] Fix any console warnings/errors
+- [x] Fix any console warnings/errors (build passed without warnings)
 - [x] Ensure full responsiveness across devices
-- [ ] Run tests and ensure they pass
+- [x] Run tests and ensure they pass
 
 ## 10. Update README
-- [ ] Add how to run locally (npm install, npm run dev)
-- [ ] Add Node version, build commands
-- [ ] Describe implemented features
-- [ ] Add instructions for running tests
-- [ ] Note trade-offs or known issues
+- [x] Add how to run locally (npm install, npm run dev)
+- [x] Add Node version, build commands
+- [x] Describe implemented features
+- [x] Add instructions for running tests
+- [x] Note trade-offs or known issues
 
 ## 11. Deploy to Vercel
-- [ ] Install Vercel CLI if needed
-- [ ] Run vercel --prod to deploy
-- [ ] Note the deployment URL
+- [x] Install Vercel CLI if needed
+- [x] Run vercel --prod to deploy
+- [x] Note the deployment URL
 
 ## 12. Final Touches
-- [ ] Commit changes with descriptive messages
-- [ ] Ensure branch is assignment/<your-name>
+- [x] Commit changes with descriptive messages
+- [x] Ensure branch is assignment/<your-name>
