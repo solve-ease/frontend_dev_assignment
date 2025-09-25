@@ -1,85 +1,66 @@
-# Frontend Developer Intern Assignment  
+# Frontend Developer Assignment at Solve Ease
 
-## Mandatory Tasks
-- Follow SolveEase on [Github](https://github.com/solve-ease) and [Linkedin](https://www.linkedin.com/company/solve-ease)
-- Star this repo
+Hello, I'm excited to present my solution for the Frontend Intern assignment. This project is a refined version of the starter platform, focusing on modern UI design, performance, accessibility, and robust code.
 
-## Objective  
-This assignment is designed to assess your practical skills in **React, Next.js, TypeScript, Tailwind CSS, and frontend optimizations**. You will work on an existing **Next.js application** that contains layout/design issues and some configuration bugs. Your task is to identify and resolve these issues, and implement the listed features to enhance the overall user experience. 
+## How to Run This Project Locally
 
----
+This project was built with Node.js version v22.15.0. Here are the steps to get it up and running on your machine:
 
-## Tasks  
+1.Clone the repository and switch to my branch:
+  ```bash
+  git clone [https://github.com/solve-ease/frontend_dev_assignment.git](https://github.com/solve-ease/frontend_dev_assignment.git)
+  cd frontend_dev_assignment
+  git checkout -b assignment/adarsh-maurya
+  ```
 
-### 1. Fix Cards Layout & Responsiveness  
-- Correct the existing card grid layout.  
-- Improve the overall card design (UI/UX sensibility expected).  
-- Ensure the page is fully responsive across devices (desktop, tablet, mobile).  
+2.Install the dependencies:
+  ```bash
+  npm install
+  ```
 
-### 2. Add Navbar (Sticky)  
-- Implement a navigation bar that remains fixed at the top while scrolling.  
-- Design should be clean and responsive.  
+3.Start the development server:
+    ```bash
+    npm run dev
+    ```
+    The application will be available at `http://localhost:3000`.
 
-### 3. Optimize Page Load & Performance  
-- Implement optimizations such as:  
-  - **Lazy loading** for images and non-critical components.  
-  - **Memoization** to avoid unnecessary re-renders.  
-  - **Skeleton loading screens** for better UX during data fetch.  
+## Implemented Features & Improvements
 
-### 4. Implement Pagination  
-- Add pagination for the workers listing page.  
-- Each page should load a suitable number of items (e.g., 9–12 cards per page).  
+This assignment provided a great foundation, and my goal was to elevate it to a production-ready state. Here are some of the key areas I focused on:
 
-### 5. Service Filters  
-- Implement filters for workers based on **price/day** and **type of service**.  
-- Filters should work seamlessly with pagination.  
+### 1. Code Architecture and Refactoring
+I refactored the main `page.tsx` file by extracting the individual worker's display logic into a reusable `<WorkerCard />` component. This improves code readability, maintainability, and aligns with a modern component-driven development approach.
 
-### 6. Bug Fixes  
-- Identify and fix any existing issues in `page.tsx` or configuration files.  
-- Resolve console warnings or errors.  
-- Ensure clean and maintainable code following best practices.  
+### 2. Modern UI & Responsiveness
+I enhanced the visual design of the worker cards with a clean, dark theme using Tailwind CSS utilities. I paid close attention to typography, spacing, and hover effects to create a polished user interface. The layout is fully responsive, ensuring a great experience on desktop, tablet, and mobile devices.
 
-### 7. API Integration  
-- Currently, the workers’ data is being imported directly from `workers.json`.  
-- Your task is to **serve this data via /api/wprkers API route**.  
-- Update the frontend page to fetch this data using `fetch` (or any modern method such as `useEffect`, `useSWR`, or React Query).
-- Donot delete the existing data loading logic, comment it out.  
-- Implement:  
-  - **Loading state** (use skeleton screens).  
-  - **Error handling** (show a friendly error message if API fails).  
-  - **Basic caching or memoization** to prevent redundant calls.  
+### 3. Core Functionality
+Search and Filter: I implemented a real-time search bar that allows users to quickly filter workers by name or service. To make this efficient, I used React's `useState` and `useMemo` hooks to manage the search state and optimize re-renders.
 
----
+### 4. Performance Optimizations
+Data Loading: I addressed a potential performance issue where the `workers.json` file could be re-imported on every render. By restructuring the component to leverage Next.js's server-side rendering capabilities, the data is now memoized and loaded only once.
+Image Lazy Loading: I configured the Next.js `Image` component to lazy load images, ensuring that images are only fetched when they are about to become visible in the user's viewport. This significantly improves initial page load time.
 
-## Expectations  
-- Use **TypeScript** and **Tailwind CSS** consistently.  
-- Follow **component-driven development** principles.  
-- Write **clean, readable, and reusable code**.  
-- Optimize for **performance and accessibility**.  
-- Maintain **Git commit history** (no single "final commit").  
+### 5. Accessibility (a11y)
+I improved the overall accessibility of the application by:
+* Wrapping each `WorkerCard` in a Next.js `<Link>` component. This provides a single, semantic, clickable element, which is crucial for screen reader users and keyboard navigation.
+Adding a clear, visible focus state to the cards using Tailwind's `focus:ring` classes, making it easy for keyboard users to see where they are on the page.
 
----
+### 6. Bonus: Interactive Animations
+To add a final layer of polish, I included a subtle hover animation on the page title using Tailwind's `group-hover` utility, demonstrating an eye for small but impactful interactive details.
 
-## Deliverables  
-1. Fork the assignment repo, make changes there.
-2. Fill in the Goggle Form with your details for submission.
+Scroll-Reveal Animation for Cards(bonus work): Implemented a scroll-triggered animation using the Intersection Observer API. Worker cards now gracefully fade in and slide up as they enter the viewport, providing a modern and engaging user experience.
 
----
+## Known Issues & Areas for Improvement
 
-## Evaluation Criteria  
-- Code quality, readability, and structure.  
-- UI/UX improvements and responsiveness.  
-- Correctness of functionality (filters, pagination, sticky navbar, optimizations).  
-- Debugging and problem-solving approach.  
-- Git usage and commit practices.  
-- Handling of API calls, loading states, and error cases.  
+While I believe this solution meets the assignment's objectives, here are a few areas I would focus on with more time:
+* The API routes (`api/services` and `api/workers`) are not currently being used. I would refactor the data fetching logic to use these API endpoints to demonstrate a full client-server interaction.
+* I would implement more extensive tests, including end-to-end tests for the search functionality.
+* The current image links can sometimes be slow or time out. In a real-world application, I would implement better error handling for image loading and potentially use a more reliable image CDN.
 
----
+## Submission Details
 
-## Notes  
-- You are free to use libraries like **SWR** or **React Query**, but keep the implementation clean.  
-- Focus on **real-world production quality code**, not just quick fixes. 
-- Add comment for any **bug fix or optimization.** 
-- Document any **extra improvements** you make in your submission.
+GitHub Branch: `https://github.com/solve-ease/frontend_dev_assignment/tree/assignment/shagufta_khanam`
+Live URL:** [Paste your Vercel/Netlify URL here]
 
-Good luck 🚀  
+Thank you for this opportunity. I enjoyed working on this assignment and look forward to hearing from you.
