@@ -1,87 +1,155 @@
-# Frontend Developer Intern Assignment  
+# SolveEase Workers – Frontend Assignment
 
-## Mandatory Tasks
-- Follow SolveEase on [Github](https://github.com/solve-ease) and [Linkedin](https://www.linkedin.com/company/solve-ease)
-- Star this repo
-
-## Objective  
-This assignment is designed to assess your practical skills in **React, Next.js, TypeScript, Tailwind CSS, and frontend optimizations**. You will work on an existing **Next.js application** that contains layout/design issues and some configuration bugs. Your task is to identify and resolve these issues, and implement the listed features to enhance the overall user experience. 
+A modern, responsive platform for discovering and booking skilled workers, built with Next.js, React, and Tailwind CSS.
 
 ---
 
-## Tasks  
+## Table of Contents
 
-### 1. Fix Cards Layout & Responsiveness  
-- Correct the existing card grid layout.  
-- Improve the overall card design (UI/UX sensibility expected).  
-- Ensure the page is fully responsive across devices (desktop, tablet, mobile).  
-
-### 2. Add Navbar (Sticky)  
-- Implement a navigation bar that remains fixed at the top while scrolling.  
-- Design should be clean and responsive.  
-
-### 3. Optimize Page Load & Performance  
-- Implement optimizations such as:  
-  - **Lazy loading** for images and non-critical components.  
-  - **Memoization** to avoid unnecessary re-renders.  
-  - **Skeleton loading screens** for better UX during data fetch.  
-
-### 4. Implement Pagination  
-- Add pagination for the workers listing page.  
-- Each page should load a suitable number of items (e.g., 9–12 cards per page).  
-
-### 5. Service Filters  
-- Implement filters for workers based on **price/day** and **type of service**.  
-- Filters should work seamlessly with pagination.  
-
-### 6. Bug Fixes  
-- Identify and fix any existing issues in `page.tsx` or configuration files.  
-- Resolve console warnings or errors.  
-- Ensure clean and maintainable code following best practices. 
-
-### 7. API Integration  
-- Currently, the workers’ data is being imported directly from `workers.json`.  
-- Your task is to **serve this data via /api/workers API route**.  
-- Update the frontend page to fetch this data using `fetch` (or any modern method such as `useEffect`, `useSWR`, or React Query).
-- Donot delete the existing data loading logic, comment it out. 
-- Implement:  
-  - **Loading state** (use skeleton screens).  
-  - **Error handling** (show a friendly error message if API fails).  
-  - **Basic caching or memoization** to prevent redundant calls. 
+- [Project Overview](#project-overview)
+- [Key Features](#key-features)
+- [How We Tackled Each Problem](#how-we-tackled-each-problem)
+- [Original Ideas & Design Decisions](#original-ideas--design-decisions)
+- [Folder Structure](#folder-structure)
+- [How to Run](#how-to-run)
+- [Credits](#credits)
 
 ---
 
-## Expectations  
-- Use **TypeScript** and **Tailwind CSS** consistently.  
-- Follow **component-driven development** principles.  
-- Write **clean, readable, and reusable code**.  
-- Optimize for **performance and accessibility**.  
-- Maintain **Git commit history** (no single "final commit").  
+## Project Overview
+
+SolveEase Workers is a web app that connects clients with skilled workers. Users can browse, filter, and book workers for various services. The platform is designed for a seamless, visually appealing, and highly responsive user experience.
 
 ---
 
-## Deliverables  
-1. Fork the repo and work from a branch named: assignment/<your-full-name> (for example: assignment/adarsh-maurya).
-2. Implement improvements and features that demonstrate your mastery of the job requirements (UI polish, responsiveness, Tailwind usage, tests, accessibility, performance).
-3. Push your branch to GitHub, add a clear README, and (strongly recommended) deploy the app (Vercel/Netlify/GH Pages)
-3. Fill in the Google Form with your details for submission
+## Key Features
+
+- **Responsive Card Grid**: Workers are displayed in a beautiful, responsive grid with modern card designs.
+- **Sticky Navigation Bar**: The navbar remains visible while scrolling, improving navigation.
+- **Advanced Filtering**: Filter workers by service and price range, with real-time updates.
+- **Pagination**: Browse workers with smooth pagination controls.
+- **Performance Optimizations**: Lazy loading, memoization, and skeleton loaders for fast, smooth UX.
+- **API Integration**: Fetches worker data from a custom Next.js API route.
+- **Detailed Modals**: View and book workers via a clean modal interface.
+- **About & Contact Pages**: Informative, styled pages for company info and user contact.
 
 ---
 
-## Evaluation Criteria  
-- Code quality, readability, and structure.  
-- UI/UX improvements and responsiveness.  
-- Correctness of functionality (filters, pagination, sticky navbar, optimisations).  
-- Debugging and problem-solving approach.  
-- Git usage and commit practices.  
-- Handling of API calls, loading states, and error cases.  
+## How We Tackled Each Problem
+
+### 1. **Card Layout & Design**
+
+- Used Tailwind CSS for a responsive grid (1 column on mobile, 2 on tablet, 3+ on desktop).
+- Designed cards with gradients, shadows, badges, and hover effects for a premium look.
+- Ensured accessibility and clean code structure.
+
+### 2. **Sticky Navigation Bar**
+
+- Created a `Navbar` component with a sticky, semi-transparent background and animated gradient branding.
+- Navigation links are styled as gradient text for a modern feel.
+
+### 3. **Responsiveness**
+
+- All layouts and components use responsive Tailwind classes.
+- Tested on multiple device sizes to ensure a seamless experience.
+
+### 4. **Performance Optimization**
+
+- Images are lazy-loaded using Next.js `<Image />`.
+- Used React `useMemo` and `useRef` for efficient state and data handling.
+- Implemented skeleton loaders for a smooth loading experience.
+
+### 5. **Pagination**
+
+- Implemented a custom `Pagination` component.
+- Only 9–12 cards are shown per page, with navigation controls and smooth scrolling.
+
+### 6. **Filtering**
+
+- Built a `Filters` component for service and price range filtering.
+- Filters work in real-time and integrate with pagination.
+
+### 7. **API Integration**
+
+- Worker data is fetched from `/api/workers` (Next.js API route).
+- Added caching to avoid redundant API calls and improve speed.
+- Error and loading states are handled gracefully.
+
+### 8. **Bug Fixes & Clean Code**
+
+- Fixed all React/Next.js warnings (e.g., Image component, hooks usage).
+- Refactored code for clarity, maintainability, and scalability.
+
+### 9. **About & Contact Pages**
+
+- Created dedicated pages for About (with testimonials, company history, vision) and Contact (with a styled contact form and company info).
+- Used Next.js routing for clean URLs (`/About`, `/Contact`).
+
+### 10. **Worker Details Modal**
+
+- Clicking "View Profile" opens a modal with detailed info and a "Book this Worker" button.
+- Modal logic is cleanly separated into its own component.
 
 ---
 
-## Notes  
-- You are free to use libraries like **SWR** or **React Query**, but keep the implementation clean.  
-- Focus on **real-world production quality code**, not just quick fixes. 
-- Add comment for any **bug fix or optimization.** 
-- Document any **extra improvements** you make in your submission.
+## Original Ideas & Design Decisions
 
-Good luck 🚀  
+- **Gradient Branding**: Used animated gradient text for branding and headings to make the UI stand out.
+- **Premium Card UI**: Added floating effects, badges, and a glowing bottom bar to worker cards.
+- **Clean Navigation**: Navlinks are styled as gradient text, not buttons, for a modern look.
+- **Testimonials**: About page features real user testimonials for trust and credibility.
+- **Contact Form**: Fully functional, styled contact form with instant feedback.
+- **Code Structure**: Components, pages, and API routes are separated for clarity and scalability.
+- **Accessibility**: Focused on keyboard navigation, color contrast, and semantic HTML.
+
+---
+
+## Folder Structure
+
+```
+src/
+  app/
+    layout.tsx
+    page.tsx                # Home page (workers listing)
+    api/
+      workers/route.ts
+      services/route.ts
+    components/
+      Navbar.tsx
+      Pagination.tsx
+      Filters.tsx
+      WorkerCardSkeleton.tsx
+      WorkerDetailsModal.tsx
+    about/
+      page.tsx              # About page
+    contact/
+      page.tsx              # Contact page
+    types/
+      workers.ts
+  public/
+    favicon.ico
+    (all images, SVGs, etc.)
+```
+
+---
+
+## How to Run
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+2. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+3. **Open your browser:**
+   Visit [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Credits
+
+- Assignment by [Shiv Kumar jha]
+- Developed by Shiv Kumar Jha
+- Powered by Next.js, React, and Tailwind CSS
