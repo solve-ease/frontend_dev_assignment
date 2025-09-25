@@ -52,7 +52,7 @@ export const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
         </p>
         <div className="flex items-center justify-between mb-4">
           <div className="text-left">
-            <span className="text-2xl font-bold text-green-600">
+            <span className="sm:text-xl lg:text-2xl font-bold text-green-600">
               ₹{Math.round(worker.pricePerDay * 1.18).toLocaleString()}
             </span>
             <span className="text-sm text-gray-500 ml-1">/ day</span>
@@ -61,8 +61,8 @@ export const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
             +18% GST
           </span>
         </div>
-        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors duration-200 font-medium text-sm">
-          Contact Worker
+        <button className="w-full  py-2 px-4 rounded-lg transition-colors duration-200 font-medium text-sm text-white hover:text-white bg-blue-600 hover:bg-green-600 cursor-pointer">
+          Contact
         </button>
       </div>
     </div>
