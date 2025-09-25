@@ -37,21 +37,36 @@
 ## 7. Implement Filters
 - [x] Add state for serviceFilter (string, default "")
 - [x] Add state for priceRange (object {min:0, max:Infinity})
-- [ ] Fetch services from /api/services for dropdown
+- [x] Fetch services from /api/services for dropdown
 - [x] Apply filters before pagination
 - [x] Integrate Filters component in page.tsx
 
-## 8. Testing and Bug Fixes
+## 8. Add Unit Tests
+- [x] Install Jest and @testing-library/react
+- [x] Write tests for WorkerCard component
+- [ ] Write tests for Filters component
+- [x] Write tests for Pagination component
+- [x] Add test script to package.json
+
+## 9. Testing and Bug Fixes
 - [x] Run npm run dev
 - [x] Test locally: responsiveness, API, filters, pagination
 - [ ] Fix any console warnings/errors
 - [x] Ensure full responsiveness across devices
+- [ ] Run tests and ensure they pass
 
-## 9. Deploy to Vercel
+## 10. Update README
+- [ ] Add how to run locally (npm install, npm run dev)
+- [ ] Add Node version, build commands
+- [ ] Describe implemented features
+- [ ] Add instructions for running tests
+- [ ] Note trade-offs or known issues
+
+## 11. Deploy to Vercel
 - [ ] Install Vercel CLI if needed
 - [ ] Run vercel --prod to deploy
 - [ ] Note the deployment URL
 
-## 10. Final Touches
+## 12. Final Touches
 - [ ] Commit changes with descriptive messages
-- [ ] Update README.md if needed
+- [ ] Ensure branch is assignment/<your-name>
