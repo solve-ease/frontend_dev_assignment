@@ -37,17 +37,17 @@ This assignment is designed to assess your practical skills in **React, Next.js,
 ### 6. Bug Fixes  
 - Identify and fix any existing issues in `page.tsx` or configuration files.  
 - Resolve console warnings or errors.  
-- Ensure clean and maintainable code following best practices.  
+- Ensure clean and maintainable code following best practices. 
 
 ### 7. API Integration  
 - Currently, the workers’ data is being imported directly from `workers.json`.  
-- Your task is to **serve this data via /api/wprkers API route**.  
+- Your task is to **serve this data via /api/workers API route**.  
 - Update the frontend page to fetch this data using `fetch` (or any modern method such as `useEffect`, `useSWR`, or React Query).
-- Donot delete the existing data loading logic, comment it out.  
+- Donot delete the existing data loading logic, comment it out. 
 - Implement:  
   - **Loading state** (use skeleton screens).  
   - **Error handling** (show a friendly error message if API fails).  
-  - **Basic caching or memoization** to prevent redundant calls.  
+  - **Basic caching or memoization** to prevent redundant calls. 
 
 ---
 

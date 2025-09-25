@@ -1,7 +1,7 @@
 "use client";
 import { WorkerType } from "@/types/workers";
 import Image from "next/image";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import WorkerCardSkeleton from "./WorkerCardSkeleton";
 import Pagination from "./Pagination";
 import Filters from "./Filters";
@@ -9,19 +9,44 @@ import Filters from "./Filters";
 export default function WorkersPage() {
   const [workersData, setWorkersData] = useState<WorkerType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedService, setSelectedService] = useState("");
   const [selectedMin, setSelectedMin] = useState(0);
   const [selectedMax, setSelectedMax] = useState(0);
   const CARDS_PER_PAGE = 12;
+  // Basic cache to prevent redundant API calls
+  const cacheRef = useRef<WorkerType[] | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
+      setError(null);
+      // --- Old logic (commented as per instructions) ---
+      // try {
+      //   const response = await import("../../workers.json");
+      //   setWorkersData(response.default);
+      // } catch (error) {
+      //   console.error("Failed to load workers:", error);
+      // } finally {
+      //   setLoading(false);
+      // }
+      // --- End old logic ---
       try {
-        const response = await import("../../workers.json");
-        setWorkersData(response.default);
-      } catch (error) {
-        console.error("Failed to load workers:", error);
+        if (cacheRef.current) {
+          setWorkersData(cacheRef.current);
+        } else {
+          const res = await fetch("/api/workers");
+          if (!res.ok) throw new Error("API error");
+          const json = await res.json();
+          if (!json.success || !Array.isArray(json.data))
+            throw new Error("Invalid data");
+          setWorkersData(json.data);
+          cacheRef.current = json.data;
+        }
+      } catch (err: any) {
+        setError("Failed to load workers. Please try again later.");
+        setWorkersData([]);
       } finally {
         setLoading(false);
       }
@@ -108,11 +133,18 @@ export default function WorkersPage() {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {loading
-          ? Array.from({ length: CARDS_PER_PAGE }).map((_, i) => (
-              <WorkerCardSkeleton key={i} />
-            ))
-          : paginatedWorkers.map((worker: WorkerType) => (
+        {loading ? (
+          Array.from({ length: CARDS_PER_PAGE }).map((_, i) => (
+            <WorkerCardSkeleton key={i} />
+          ))
+        ) : error ? (
+          <div className="col-span-full text-center text-red-600 font-semibold py-8">
+            {error}
+          </div>
+        ) : (
+          paginatedWorkers.map((worker: WorkerType, idx: number) => {
+            const isPriority = idx === 0;
+            return (
               <div
                 key={worker.id}
                 className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.03] hover:border-blue-400 group flex flex-col"
@@ -122,8 +154,9 @@ export default function WorkersPage() {
                     src={worker.image}
                     alt={worker.name}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     className="object-cover group-hover:opacity-90 transition-opacity duration-200 rounded-t-2xl"
-                    loading="lazy"
+                    {...(isPriority ? { priority: true } : { loading: "lazy" })}
                   />
                 </div>
                 <div className="p-4 flex-1 flex flex-col justify-between">
@@ -143,7 +176,9 @@ export default function WorkersPage() {
                   </p>
                 </div>
               </div>
-            ))}
+            );
+          })
+        )}
       </div>
 
       {!loading && (
