@@ -1,5 +1,6 @@
 'use client'
 import { ImageContainer } from '@/components/images-container'
+import {Navbar} from '@/components/navbar'
 import { WorkerType } from '@/types/workers'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
@@ -60,6 +61,9 @@ import { useState, useEffect } from 'react'
 
 export default function WorkersPage(){
 return (
+  <>
+  <Navbar/>
   <ImageContainer/>
+   </>
 )
 }
