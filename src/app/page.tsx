@@ -17,35 +17,25 @@ export default function WorkersPage() {
   const [serviceType, setServiceType] = useState('all')
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000])
 
- useEffect(() => {
-  const fetchWorkers = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/workers')
-      if (!res.ok) throw new Error('Failed to fetch workers')
-      const data = await res.json()
-      setWorkersData(data.data)
-    } catch (err: unknown) {
-      console.error(err)
-      if (err instanceof Error) {
-        setError(err.message)
-      } else {
-        setError('Something went wrong')
+  useEffect(() => {
+    const fetchWorkers = async () => {
+      setLoading(true)
+      try {
+        const res = await fetch('/api/workers')
+        if (!res.ok) throw new Error('Failed to fetch workers')
+        const data = await res.json()
+        setWorkersData(data.data)
+      } catch (err: unknown) {
+        console.error(err)
+        if (err instanceof Error) setError(err.message)
+        else setError('Something went wrong')
+      } finally {
+        setLoading(false)
       }
-    } finally {
-      setLoading(false)
     }
-  }
 
-  fetchWorkers()
-
-  // Existing fallback logic (commented)
-  /*
-  import('../../workers.json').then(response => setWorkersData(response.default))
-    .catch(err => console.error('Failed to load workers:', err))
-  */
-}, [])
-
+    fetchWorkers()
+  }, [])
 
   // Filter and sort (memoized)
   const filteredWorkers = useMemo(() => {
@@ -65,7 +55,6 @@ export default function WorkersPage() {
     return filteredWorkers.slice(start, start + itemsPerPage)
   }, [filteredWorkers, currentPage])
 
-  // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1)
   }, [serviceType, priceRange])
@@ -113,10 +102,7 @@ export default function WorkersPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4 md:px-8 lg:px-12">
         {loading
           ? skeletons.map((_, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg animate-pulse h-[350px]"
-              >
+              <div key={index} className="bg-white rounded-3xl overflow-hidden shadow-lg animate-pulse h-[350px]">
                 <div className="w-full h-52 bg-gray-200" />
                 <div className="p-6 space-y-3">
                   <div className="h-4 bg-gray-200 rounded w-3/4" />
@@ -126,10 +112,7 @@ export default function WorkersPage() {
               </div>
             ))
           : currentWorkers.map(worker => (
-              <div
-                key={worker.id}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300"
-              >
+              <div key={worker.id} className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
                 <div className="w-full h-52 relative">
                   <Image
                     src={worker.image}
@@ -139,15 +122,10 @@ export default function WorkersPage() {
                     loading={worker.id <= 10 ? 'eager' : 'lazy'}
                   />
                 </div>
-
                 <div className="p-6 text-center">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                    {worker.name}
-                  </h2>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-2">{worker.name}</h2>
                   <p className="text-gray-500 text-sm mb-3">{worker.service}</p>
-                  <p className="text-indigo-600 font-bold text-lg">
-                    ₹{Math.round(worker.pricePerDay * 1.18)} / day
-                  </p>
+                  <p className="text-indigo-600 font-bold text-lg">₹{Math.round(worker.pricePerDay * 1.18)} / day</p>
                 </div>
               </div>
             ))}
@@ -175,11 +153,7 @@ export default function WorkersPage() {
               <button
                 key={pageNum}
                 onClick={() => setCurrentPage(pageNum)}
-                className={`px-3 py-1 rounded ${
-                  currentPage === pageNum
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 dark:bg-gray-700 dark:text-white'
-                }`}
+                className={`px-3 py-1 rounded ${currentPage === pageNum ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 dark:text-white'}`}
               >
                 {pageNum}
               </button>
@@ -197,7 +171,6 @@ export default function WorkersPage() {
 
       {/* Error message */}
       {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-
       <div className="h-24"></div>
     </main>
   )

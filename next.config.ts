@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'randomuser.me',
-        pathname: '/**', // allow all paths
+        pathname: '/**',
       },
       {
         protocol: 'https',

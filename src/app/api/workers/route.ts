@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import workersData from '../../../../workers.json';
+import workersData from '../../../../workers.json'; 
 
 export async function GET() {
   try {
