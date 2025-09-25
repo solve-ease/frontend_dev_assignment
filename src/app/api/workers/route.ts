@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
-export const dynamic = 'force-static'
 import workersData from '../../../../workers.json'
+
+export const dynamic = 'force-static'
 
 export async function GET() {
   try {
