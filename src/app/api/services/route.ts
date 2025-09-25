@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+export const dynamic = 'force-static'
 import workersData from '../../../../workers.json'
 
 // GET /api/services
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100))
@@ -33,41 +34,21 @@ export async function GET(request: NextRequest) {
     // Sort by count (most popular services first)
     serviceStats.sort((a, b) => b.count - a.count)
 
-    const { searchParams } = new URL(request.url)
-    const includeStats = searchParams.get('stats') === 'true'
-
-    if (includeStats) {
-      return NextResponse.json({
-        success: true,
-        data: serviceStats,
-        metadata: {
-          totalServices: services.length,
-          totalWorkers: workersData.length
-        },
-        timestamp: new Date().toISOString()
-      }, {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=300',
-        }
-      })
-    } else {
-      return NextResponse.json({
-        success: true,
-        data: services,
-        metadata: {
-          count: services.length
-        },
-        timestamp: new Date().toISOString()
-      }, {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=300',
-        }
-      })
-    }
+    return NextResponse.json({
+      success: true,
+      data: serviceStats,
+      metadata: {
+        totalServices: services.length,
+        totalWorkers: workersData.length
+      },
+      timestamp: new Date().toISOString()
+    }, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=300',
+      }
+    })
 
   } catch (error) {
     console.error('API Error:', error)
@@ -77,6 +58,6 @@ export async function GET(request: NextRequest) {
       error: 'Internal Server Error',
       message: 'Failed to fetch services',
       timestamp: new Date().toISOString()
-    }, { status: 500 })
-  }
+    }, { status: 500 })
+  }
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+export const dynamic = 'force-static'
 import workersData from '../../../../workers.json'
 
 export async function GET() {
@@ -12,7 +13,6 @@ export async function GET() {
     return NextResponse.json({
       success: false,
       error: 'Failed to fetch workers data'
-    }, { status: 500 })
-  }
+    }, { status: 500 })
+  }
 }
-
