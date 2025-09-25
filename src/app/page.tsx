@@ -2,6 +2,7 @@
 import { WorkerType } from '@/types/workers'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import Navbar from "@/app/components/Navbar";
 
 export default function WorkersPage() {
   const [workersData, setWorkersData] = useState<WorkerType[]>([])
@@ -21,6 +22,7 @@ export default function WorkersPage() {
 
   return (
     <main className='container mx-auto px-4 py-8 bg-[#000000]'>
+       <Navbar />
       <h1 className='text-3xl font-bold mb-8 text-center'>Our Workers</h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-6'>
