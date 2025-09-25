@@ -93,6 +93,8 @@ export default function WorkersPage() {
             className='object-cover'
             sizes='(min-width: 1280px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw'
             priority={false}
+            unoptimized
+            loading='lazy'
           />
         </div>
         <div className='p-4'>
