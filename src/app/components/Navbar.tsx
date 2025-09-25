@@ -32,7 +32,7 @@ export const Navbar = memo(() => {
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">WorkerHub</h1>
+          <h1 className="text-2xl font-bold text-gray-900">WorkersHub</h1>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
