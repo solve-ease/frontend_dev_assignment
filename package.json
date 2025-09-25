@@ -29,5 +29,9 @@
     "tailwindcss": "^4",
     "ts-jest": "^29.4.4",
     "typescript": "^5"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.22",
+    "lucide-react": "^0.544.0"
   }
 }
