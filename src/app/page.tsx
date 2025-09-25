@@ -1,4 +1,5 @@
 'use client'
+import Navbar from '../components/Navbar';
 import { WorkerType } from '@/types/workers'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
@@ -20,6 +21,9 @@ export default function WorkersPage() {
   }, [])
 
   return (
+    <>
+    <Navbar />
+
     <main className='container mx-auto px-4 py-8 bg-[#000000]'>
       {/* Changed: Added text-white for better contrast on dark background */}
       <h1 className='text-3xl font-bold mb-8 text-center text-white'>Our Workers</h1>
@@ -65,5 +69,6 @@ export default function WorkersPage() {
           ))}
       </div>
     </main>
+    </>
   )
 }
