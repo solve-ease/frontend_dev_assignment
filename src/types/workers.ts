@@ -1,3 +1,5 @@
+
+
 export interface WorkerType {
   id: number
   name: string
@@ -5,3 +7,4 @@ export interface WorkerType {
   pricePerDay: number
   image: string
 }
+
