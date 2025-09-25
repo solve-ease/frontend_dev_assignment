@@ -1,5 +1,5 @@
 import { WorkerType } from '@/types/workers'
-import Image from 'next/image'
+import Image from 'next/image' 
 import Link from 'next/link'
 
 interface WorkerCardProps {
@@ -16,14 +16,11 @@ export default function WorkerCard({ worker }: WorkerCardProps) {
       className="relative flex flex-col items-center overflow-hidden rounded-xl bg-slate-900/40 p-4 text-center shadow-lg transition-all duration-300 hover:scale-105 hover:bg-slate-900/60 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-offset-2"
     >
       <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
-        <Image
+        
+        <img
           src={worker.image}
           alt={worker.name}
-          fill
-          className="object-cover"
-          sizes="128px"
-          priority={worker.id <= 10}
-          loading={worker.id > 10 ? "lazy" : "eager"}
+          className="object-cover w-full h-full"
         />
       </div>
       <div className="mt-4 flex-grow">
