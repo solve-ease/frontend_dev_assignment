@@ -32,6 +32,7 @@ export const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
             src={worker.image}
             alt={worker.name}
             fill
+            unoptimized
             className={`object-cover group-hover:scale-105 transition-transform duration-300 ${
               imageLoaded ? "opacity-100" : "opacity-0"
             }`}
