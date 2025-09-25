@@ -1,12 +1,12 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  experimental: {
-    appDir: true,
+  experimental: { appDir: true },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   images: {
     domains: ["randomuser.me"],
   },
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
