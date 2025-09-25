@@ -64,7 +64,7 @@ This assignment is designed to assess your practical skills in **React, Next.js,
 1. Fork the repo and work from a branch named: assignment/<your-full-name> (for example: assignment/adarsh-maurya).
 2. Implement improvements and features that demonstrate your mastery of the job requirements (UI polish, responsiveness, Tailwind usage, tests, accessibility, performance).
 3. Push your branch to GitHub, add a clear README, and (strongly recommended) deploy the app (Vercel/Netlify/GH Pages)
-3. Fill in the Google Form with your details for submission.
+3. Fill in the Google Form with your details for submission
 
 ---
 
