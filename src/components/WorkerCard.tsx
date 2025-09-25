@@ -1,5 +1,4 @@
 import { WorkerType } from '@/types/workers'
-import Image from 'next/image'
 import React from 'react'
 
 const WorkerCard = React.memo(({ worker }: { worker: WorkerType }) => {
@@ -9,14 +8,12 @@ const WorkerCard = React.memo(({ worker }: { worker: WorkerType }) => {
       className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-transform duration-300 hover:scale-[1.02]"
     >
       <div className="">
-        <Image
+        <img
           src={worker.image}
           alt={worker.name}
           width={400}
           height={192}
           className="object-cover w-full h-48"
-          priority={worker.id === 1}
-          unoptimized
         />
       </div>
       <div className="p-4">
