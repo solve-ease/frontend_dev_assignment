@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +25,32 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://randomuser.me" />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900`}
       >
-        {children}
+        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
+          <nav className="container mx-auto px-4 h-14 flex items-center justify-between">
+            <Link href="/" className="font-semibold">SolveEase</Link>
+            <div className="flex items-center gap-6 text-sm">
+              <Link href="/" className="hover:text-gray-700">Workers</Link>
+              <Link href="/api/workers" className="hover:text-gray-700">API</Link>
+              <a href="https://github.com/solve-ease" target="_blank" rel="noreferrer" className="hover:text-gray-700">GitHub</a>
+            </div>
+          </nav>
+        </header>
+        <div className="min-h-[calc(100dvh-3.5rem)]">
+          {children}
+        </div>
+        <footer className="border-t bg-white">
+          <div className="container mx-auto px-4 py-6 text-sm text-gray-500 flex items-center justify-between">
+            <span>© {new Date().getFullYear()} SolveEase</span>
+            <span>Next.js • React • Tailwind CSS</span>
+          </div>
+        </footer>
       </body>
     </html>
   );

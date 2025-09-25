@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import workersData from '../../../../workers.json'
+
+export const runtime = 'nodejs'
 
 // GET /api/services
 export async function GET(request: NextRequest) {
   try {
+    const mod = await import('../../../../workers.json')
+    const workersData = mod.default
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100))
 
@@ -37,36 +40,42 @@ export async function GET(request: NextRequest) {
     const includeStats = searchParams.get('stats') === 'true'
 
     if (includeStats) {
-      return NextResponse.json({
-        success: true,
-        data: serviceStats,
-        metadata: {
-          totalServices: services.length,
-          totalWorkers: workersData.length
+      return NextResponse.json(
+        {
+          success: true,
+          data: serviceStats,
+          metadata: {
+            totalServices: services.length,
+            totalWorkers: workersData.length
+          },
+          timestamp: new Date().toISOString()
         },
-        timestamp: new Date().toISOString()
-      }, {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=300',
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'public, max-age=300'
+          }
         }
-      })
+      )
     } else {
-      return NextResponse.json({
-        success: true,
-        data: services,
-        metadata: {
-          count: services.length
+      return NextResponse.json(
+        {
+          success: true,
+          data: services,
+          metadata: {
+            count: services.length
+          },
+          timestamp: new Date().toISOString()
         },
-        timestamp: new Date().toISOString()
-      }, {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=300',
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'public, max-age=300'
+          }
         }
-      })
+      )
     }
 
   } catch (error) {
