@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +26,34 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        {children}
+        <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/80 border-b border-gray-200">
+          <nav className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <Link href="/" className="font-semibold text-lg tracking-tight">
+              SolveEase Workers
+            </Link>
+            <div className="flex items-center gap-4 text-sm">
+              <Link href="#workers" className="hover:text-blue-600">Workers</Link>
+              <Link href="#filters" className="hover:text-blue-600">Filters</Link>
+              <a
+                href="https://github.com/solve-ease"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex hover:text-blue-600"
+              >
+                GitHub
+              </a>
+            </div>
+          </nav>
+        </header>
+        <div className="min-h-screen">{children}</div>
+        <footer className="border-t border-gray-200 mt-12">
+          <div className="container mx-auto px-4 py-6 text-sm text-gray-600 flex items-center justify-between">
+            <span>© {new Date().getFullYear()} SolveEase</span>
+            <span className="hidden sm:inline">Frontend Assignment</span>
+          </div>
+        </footer>
       </body>
     </html>
   );
