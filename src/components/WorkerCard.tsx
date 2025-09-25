@@ -22,6 +22,7 @@ const WorkerCard = React.memo(function WorkerCard({
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-300"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          unoptimized 
         />
         <span className="absolute top-3 left-3 bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-xs font-medium px-2 py-1 rounded-full shadow">
           {worker.service}
