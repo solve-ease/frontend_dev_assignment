@@ -1,87 +1,130 @@
-# Frontend Developer Intern Assignment  
+# Solve Ease – Frontend Developer Assignment
 
-## Mandatory Tasks
-- Follow SolveEase on [Github](https://github.com/solve-ease) and [Linkedin](https://www.linkedin.com/company/solve-ease)
-- Star this repo
+A **Next.js 14 + TypeScript + Tailwind CSS** project implementing a worker directory with **filters, pagination, responsive UI, API integration, performance optimizations, and testing**.
 
-## Objective  
-This assignment is designed to assess your practical skills in **React, Next.js, TypeScript, Tailwind CSS, and frontend optimizations**. You will work on an existing **Next.js application** that contains layout/design issues and some configuration bugs. Your task is to identify and resolve these issues, and implement the listed features to enhance the overall user experience. 
+## Features
 
----
-
-## Tasks  
-
-### 1. Fix Cards Layout & Responsiveness  
-- Correct the existing card grid layout.  
-- Improve the overall card design (UI/UX sensibility expected).  
-- Ensure the page is fully responsive across devices (desktop, tablet, mobile).  
-
-### 2. Add Navbar (Sticky)  
-- Implement a navigation bar that remains fixed at the top while scrolling.  
-- Design should be clean and responsive.  
-
-### 3. Optimize Page Load & Performance  
-- Implement optimizations such as:  
-  - **Lazy loading** for images and non-critical components.  
-  - **Memoization** to avoid unnecessary re-renders.  
-  - **Skeleton loading screens** for better UX during data fetch.  
-
-### 4. Implement Pagination  
-- Add pagination for the workers listing page.  
-- Each page should load a suitable number of items (e.g., 9–12 cards per page).  
-
-### 5. Service Filters  
-- Implement filters for workers based on **price/day** and **type of service**.  
-- Filters should work seamlessly with pagination.  
-
-### 6. Bug Fixes  
-- Identify and fix any existing issues in `page.tsx` or configuration files.  
-- Resolve console warnings or errors.  
-- Ensure clean and maintainable code following best practices.  
-
-### 7. API Integration  
-- Currently, the workers’ data is being imported directly from `workers.json`.  
-- Your task is to **serve this data via /api/wprkers API route**.  
-- Update the frontend page to fetch this data using `fetch` (or any modern method such as `useEffect`, `useSWR`, or React Query).
-- Donot delete the existing data loading logic, comment it out.  
-- Implement:  
-  - **Loading state** (use skeleton screens).  
-  - **Error handling** (show a friendly error message if API fails).  
-  - **Basic caching or memoization** to prevent redundant calls.  
+- **Responsive Design** – Works seamlessly on desktop, tablet, and mobile
+- **Sticky Navigation** – Glass-effect navbar that stays visible on scroll
+- **Advanced Filtering** – Filter workers by service type & price range (debounced inputs)
+- **Pagination** – Efficient navigation with 12 workers per page, integrates with filters
+- **API Integration** – Fetches workers & services from `/api/workers` and `/api/services`
+- **Performance Optimizations**
+  - Lazy loading of images & components
+  - Memoized computations for filters and pagination
+  - In-memory API caching with timestamp validation (5 min)
+  - Debounced filtering (180ms delay)
+- **Smooth Loading States** – Skeleton shimmer UI for a better UX
+- **Accessibility Improvements** – ARIA labels, semantic HTML, keyboard-friendly inputs
+- **Error Handling** – User-friendly error messages & retry-friendly logic
+- **Testing** – Unit tests with Jest + React Testing Library
 
 ---
 
-## Expectations  
-- Use **TypeScript** and **Tailwind CSS** consistently.  
-- Follow **component-driven development** principles.  
-- Write **clean, readable, and reusable code**.  
-- Optimize for **performance and accessibility**.  
-- Maintain **Git commit history** (no single "final commit").  
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion (cards & grid fade-in)
+- **Icons:** Lucide React
+- **Images:** Next.js Image Optimization
+- **Testing:** Jest + React Testing Library
 
 ---
 
-## Deliverables  
-1. Fork the repo and work from a branch named: assignment/<your-full-name> (for example: assignment/adarsh-maurya).
-2. Implement improvements and features that demonstrate your mastery of the job requirements (UI polish, responsiveness, Tailwind usage, tests, accessibility, performance).
-3. Push your branch to GitHub, add a clear README, and (strongly recommended) deploy the app (Vercel/Netlify/GH Pages)
-3. Fill in the Google Form with your details for submission.
+## Project Structure
+
+```bash
+public/
+src/
+  app/
+    api/
+      services/route.ts     # Services API
+      workers/route.ts      # Workers API
+    layout.tsx              # Root layout
+    page.tsx                # WorkersPage (main UI)
+  components/
+    Navbar.tsx              # Sticky top navigation
+    WorkerCard.tsx          # Worker profile card
+    SkeletonCard.tsx        # Shimmer loader
+    Filters.tsx             # Service + price filters
+    Pagination.tsx          # Paginated navigation
+  hooks/
+    useWorkers.ts           # Data fetching + caching
+  types/
+    workers.ts              # WorkerType definition
+workers.json                # Dataset (1000 workers)
+```
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd FRONTEND_DEV_ASSIGNMENT
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run locally
+
+```bash
+npm run dev
+```
+
+### 4. Build for production
+
+```bash
+npm run build
+npm run start
+```
 
 ---
 
-## Evaluation Criteria  
-- Code quality, readability, and structure.  
-- UI/UX improvements and responsiveness.  
-- Correctness of functionality (filters, pagination, sticky navbar, optimisations).  
-- Debugging and problem-solving approach.  
-- Git usage and commit practices.  
-- Handling of API calls, loading states, and error cases.  
+## Fixes Implemented
+
+- Removed duplicate data loading from `page.tsx`
+- Fixed layout responsiveness (grid & cards)
+- Resolved console/config warnings
+- Replaced direct JSON imports with API fetch (`/api/workers`)
+- Added skeleton loaders & proper error states
+- Improved accessibility with ARIA attributes
+- Production-grade optimizations (lazy loading, caching, memoization, debouncing)
 
 ---
 
-## Notes  
-- You are free to use libraries like **SWR** or **React Query**, but keep the implementation clean.  
-- Focus on **real-world production quality code**, not just quick fixes. 
-- Add comment for any **bug fix or optimization.** 
-- Document any **extra improvements** you make in your submission.
+## Performance Features
 
-Good luck 🚀  
+- **Debounced filtering** (180ms delay for smoother UI)
+- **Memoized computations** for filters & pagination
+- **In-memory API caching** (with 5-minute validity)
+- **Optimized image loading** with Next.js `<Image />`
+- **Skeleton loading states** for API fetches
+
+---
+
+## Testing
+
+- **Unit Tests** – Components (`WorkerCard`, `Pagination`)
+- **Accessibility Tests** – ARIA roles & attributes
+- **User Interaction Tests** – Pagination clicks, filter inputs
+- **Edge Cases** – No workers found, API errors
+
+Run tests:
+
+```bash
+npm test
+```
+
+---
+
+## Known Trade-offs
+
+- Client-side fetching of 1000 records – fine for demo; for scale, move to **server-side pagination & filtering**
+- In-memory caching resets on reload – could be upgraded to SWR or React Query
+
+---
