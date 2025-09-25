@@ -88,25 +88,13 @@ export default function WorkersPageClient() {
         className="group bg-white border border-gray-200 rounded-2xl shadow-md w-full max-w-[calc(33.333%-1.25rem)] min-h-[420px] flex flex-col overflow-hidden"
       >
         <div className="w-full h-56 relative flex items-center justify-center bg-gray-50">
-          {worker.id <= 10 ? (
-            <Image
-              src={worker.image}
-              alt={worker.name}
-              width={288}
-              height={224}
-              className="object-contain"
-              priority
-            />
-          ) : (
-            <Image
-              src={worker.image}
-              alt={worker.name}
-              width={288}
-              height={224}
-              className="object-contain"
-              loading="lazy"
-            />
-          )}
+          <img
+            src={worker.image}
+            alt={worker.name}
+            width={288}
+            height={224}
+            className="object-contain"
+          />
         </div>
 
         <div className="p-5 flex-1 flex flex-col justify-between">
@@ -254,14 +242,14 @@ export default function WorkersPageClient() {
               </button>
 
               <div className="flex flex-col items-center">
-                <Image
+                <img
                   src={selectedWorker.image}
                   alt={selectedWorker.name}
                   width={200}
                   height={200}
                   className="object-contain rounded-lg mb-4"
-                  loading="lazy"
                 />
+
                 <h2 className="text-2xl font-bold text-gray-800">
                   {selectedWorker.name}
                 </h2>
