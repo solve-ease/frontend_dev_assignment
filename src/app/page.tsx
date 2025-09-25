@@ -3,10 +3,13 @@ import { WorkerType } from "@/types/workers";
 import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
 import WorkerCardSkeleton from "./WorkerCardSkeleton";
+import Pagination from "./Pagination";
 
 export default function WorkersPage() {
   const [workersData, setWorkersData] = useState<WorkerType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const CARDS_PER_PAGE = 12;
 
   useEffect(() => {
     const loadData = async () => {
@@ -30,16 +33,30 @@ export default function WorkersPage() {
       .sort((a, b) => a.name.localeCompare(b.name));
   }, [workersData]);
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredWorkers.length / CARDS_PER_PAGE);
+  const paginatedWorkers = useMemo(() => {
+    const start = (currentPage - 1) * CARDS_PER_PAGE;
+    return filteredWorkers.slice(start, start + CARDS_PER_PAGE);
+  }, [filteredWorkers, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <main className="container mx-auto px-2 sm:px-4 py-8 bg-[#f6eded] min-h-screen">
       <h1 className="text-3xl font-bold mb-8 text-center">Our Workers</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {loading
-          ? Array.from({ length: 8 }).map((_, i) => (
+          ? Array.from({ length: CARDS_PER_PAGE }).map((_, i) => (
               <WorkerCardSkeleton key={i} />
             ))
-          : filteredWorkers.map((worker: WorkerType) => (
+          : paginatedWorkers.map((worker: WorkerType) => (
               <div
                 key={worker.id}
                 className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.03] hover:border-blue-400 group flex flex-col"
@@ -72,6 +89,14 @@ export default function WorkersPage() {
               </div>
             ))}
       </div>
+
+      {!loading && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </main>
   );
 }
