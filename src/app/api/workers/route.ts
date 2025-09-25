@@ -1,18 +1,18 @@
-import { NextResponse } from 'next/server'
-import workersData from '../../../../workers.json'
+import { NextResponse } from 'next/server';
+import workersData from '../../../../workers.json';
 
 export async function GET() {
   try {
     return NextResponse.json({
       success: true,
-      data: workersData
-    })
-  } catch (error) {
-    console.error('API Error:', error)
+      data: workersData,
+      timestamp: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('API Error:', err);
     return NextResponse.json({
       success: false,
-      error: 'Failed to fetch workers data'
-    }, { status: 500 })
+      error: 'Internal Server Error'
+    }, { status: 500 });
   }
 }
-
