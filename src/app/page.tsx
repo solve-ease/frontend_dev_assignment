@@ -5,27 +5,15 @@ import { WorkerType } from "@/types/workers";
 import WorkerCard from "./components/WorkerCard"
 import Navbar from "./components/Navbar"
 import Pagination from "./components/Pagination";
+import Filters from "./components/Filters";
+import { FilterState } from "@/types/workers";
+import { ApiResponse } from "@/types/workers";
 import {
+  Filter,
   Search,
   AlertCircle,
 } from "lucide-react";
 
-// ============================================================================
-// INTERFACES AND TYPES
-// ============================================================================
-
-interface FilterState {
-  service: string;
-  minPrice: number;
-  maxPrice: number;
-  searchQuery: string;
-}
-
-interface ApiResponse {
-  success: boolean;
-  data?: WorkerType[];
-  error?: string;
-}
 
 // MAIN WORKERS PAGE COMPONENT
 
@@ -159,6 +147,7 @@ export default function WorkersPage() {
     filteredWorkers,
     paginatedWorkers,
     totalPages,
+    uniqueServices,
     priceRange,
   } = useMemo(() => {
     // Get unique services
@@ -237,6 +226,10 @@ export default function WorkersPage() {
 
   // EVENT HANDLERS
 
+  const handleFiltersChange = useCallback((newFilters: FilterState) => {
+    setFilters(newFilters);
+  }, []);
+
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -289,7 +282,39 @@ export default function WorkersPage() {
             </div>
           )}
         </div>
-         
+
+        <div className="lg:grid lg:grid-cols-4 lg:gap-8">
+          {/* Filters Sidebar */}
+          <div className="lg:col-span-1">
+            <button
+              onClick={() => setShowFilters(true)}
+              className="lg:hidden w-full mb-6 bg-white border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors"
+            >
+              <Filter className="w-5 h-5" />
+              <span>Filters</span>
+            </button>
+
+            <div className="hidden lg:block">
+              <Filters
+                filters={filters}
+                onFiltersChange={handleFiltersChange}
+                services={uniqueServices}
+                priceRange={priceRange}
+                isVisible={true}
+                onClose={() => setShowFilters(false)}
+                closeOnOutsideClick={false}
+              />
+            </div>
+
+            <Filters
+              filters={filters}
+              onFiltersChange={handleFiltersChange}
+              services={uniqueServices}
+              priceRange={priceRange}
+              isVisible={showFilters}
+              onClose={() => setShowFilters(false)}
+            />
+          </div>
 
           {/* Workers Grid */}
           <div className="lg:col-span-3">
@@ -309,7 +334,6 @@ export default function WorkersPage() {
               </div>
             )}
 
-          
 
             {/* Workers Grid */}
             {!loading && paginatedWorkers.length > 0 && (
@@ -320,7 +344,31 @@ export default function WorkersPage() {
               </div>
             )}
 
-          
+            {/* No Results */}
+            {!loading && filteredWorkers.length === 0 && (
+              <div className="text-center py-12">
+                <Search className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  No workers found
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Try adjusting your filters or search terms
+                </p>
+                <button
+                  onClick={() =>
+                    handleFiltersChange({
+                      service: "",
+                      minPrice: priceRange.min,
+                      maxPrice: priceRange.max,
+                      searchQuery: "",
+                    })
+                  }
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors duration-200"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            )}
 
             {/* Pagination */}
             {!loading && (
@@ -331,6 +379,7 @@ export default function WorkersPage() {
               />
             )}
           </div>
+        </div>
       </main>
     </div>
   );
