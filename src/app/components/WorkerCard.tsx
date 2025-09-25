@@ -61,7 +61,7 @@ export const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
             +18% GST
           </span>
         </div>
-        <button className="w-full  py-2 px-4 rounded-lg transition-colors duration-200 font-medium text-sm text-white hover:text-white bg-blue-600 hover:bg-green-600 cursor-pointer">
+        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors duration-200 font-medium text-sm cursor-pointer">
           Contact
         </button>
       </div>
