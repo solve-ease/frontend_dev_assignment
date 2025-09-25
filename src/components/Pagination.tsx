@@ -3,7 +3,7 @@
 interface PaginationProps {
   currentPage: number
   totalPages: number
-  setCurrentPage: (value: number) => void
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function Pagination({ currentPage, totalPages, setCurrentPage }: PaginationProps) {
