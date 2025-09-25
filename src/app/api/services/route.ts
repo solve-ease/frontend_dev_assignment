@@ -7,10 +7,10 @@ export async function GET(request: NextRequest) {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100))
 
-    // Extract unique services from workers data
+   
     const services = Array.from(new Set(workersData.map(worker => worker.service)))
     
-    // Get service statistics
+   
     const serviceStats = services.map(service => {
       const workersInService = workersData.filter(worker => worker.service === service)
       const avgPrice = Math.round(

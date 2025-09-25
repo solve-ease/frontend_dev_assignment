@@ -17,30 +17,35 @@ export default function WorkersPage() {
   const [serviceType, setServiceType] = useState('all')
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000])
 
-  useEffect(() => {
-    const fetchWorkers = async () => {
-      setLoading(true)
-      try {
-        const res = await fetch('/api/workers')
-        if (!res.ok) throw new Error('Failed to fetch workers')
-        const data = await res.json()
-        setWorkersData(data.data) // your API returns { success: true, data: [...] }
-      } catch (err: any) {
-        console.error(err)
-        setError(err.message || 'Something went wrong')
-      } finally {
-        setLoading(false)
+ useEffect(() => {
+  const fetchWorkers = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch('/api/workers')
+      if (!res.ok) throw new Error('Failed to fetch workers')
+      const data = await res.json()
+      setWorkersData(data.data)
+    } catch (err: unknown) {
+      console.error(err)
+      if (err instanceof Error) {
+        setError(err.message)
+      } else {
+        setError('Something went wrong')
       }
+    } finally {
+      setLoading(false)
     }
+  }
 
-    fetchWorkers()
+  fetchWorkers()
 
-    // Existing fallback logic (commented)
-    /*
-    import('../../workers.json').then(response => setWorkersData(response.default))
-      .catch(err => console.error('Failed to load workers:', err))
-    */
-  }, [])
+  // Existing fallback logic (commented)
+  /*
+  import('../../workers.json').then(response => setWorkersData(response.default))
+    .catch(err => console.error('Failed to load workers:', err))
+  */
+}, [])
+
 
   // Filter and sort (memoized)
   const filteredWorkers = useMemo(() => {
