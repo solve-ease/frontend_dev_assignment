@@ -15,18 +15,35 @@ export default function Navbar() {
 
           {/* Nav Links (placeholder) */}
           <div className="hidden sm:flex items-center gap-6">
-            <Link href="/" className="text-sm text-neutral-700 hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-neutral-300 rounded">
-              Home
-            </Link>
-            <Link href="#services" className="text-sm text-neutral-700 hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-neutral-300 rounded">
-              Services
-            </Link>
-            <Link href="#contact" className="text-sm text-neutral-700 hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-neutral-300 rounded">
-              Contact
-            </Link>
+            <NavItem href="/">Home</NavItem>
+            <NavItem href="#services">Services</NavItem>
+            <NavItem href="#contact">Contact</NavItem>
           </div>
         </div>
       </div>
     </nav>
+  )
+}
+
+type NavItemProps = {
+  href: string
+  children: React.ReactNode
+}
+
+function NavItem({ href, children }: NavItemProps) {
+  return (
+    <Link
+      href={href}
+      className="relative group text-sm text-neutral-700 hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 rounded px-1"
+    >
+      <span className="relative inline-flex items-center transition [text-shadow:0_0_0_rgba(0,0,0,0)] group-active:[text-shadow:0_0_8px_rgba(0,0,0,0.1)]">
+        {children}
+        {/* underline */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 bg-gradient-to-r from-indigo-500 via-violet-500 to-blue-500 transition-transform duration-200 group-hover:scale-x-100 group-focus-visible:scale-x-100"
+        />
+      </span>
+    </Link>
   )
 }

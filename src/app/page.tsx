@@ -1,16 +1,23 @@
 'use client'
 import { WorkerType } from '@/types/workers'
 import Image from 'next/image'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import Pagination from '@/components/Pagination'
 import Filters, { type FiltersValue } from '@/components/Filters'
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 
 export default function WorkersPage() {
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll()
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -40])
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.7])
   const [workersData, setWorkersData] = useState<WorkerType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [services, setServices] = useState<string[]>([])
   const [filters, setFilters] = useState<FiltersValue>({ service: 'all', minPrice: 0, maxPrice: 0 })
+  const panelRef = useRef<HTMLDivElement | null>(null)
+  const [viewportMouse, setViewportMouse] = useState<{ x: number; y: number }>({ x: -9999, y: -9999 })
 
   useEffect(() => {
     const loadData = async () => {
@@ -104,6 +111,16 @@ export default function WorkersPage() {
     })
   }, [overallMin, overallMax, workersData.length])
 
+  // Track mouse across the entire viewport for a global glow
+  useEffect(() => {
+    if (reduceMotion) return
+    // set an initial position so the glow is visible immediately
+    setViewportMouse({ x: window.innerWidth / 2, y: window.innerHeight / 3 })
+    const handler = (e: MouseEvent) => setViewportMouse({ x: e.clientX, y: e.clientY })
+    window.addEventListener('mousemove', handler)
+    return () => window.removeEventListener('mousemove', handler)
+  }, [reduceMotion])
+
   // Pagination state & derived data
   const [page, setPage] = useState<number>(1)
   const pageSize = 12
@@ -126,14 +143,40 @@ export default function WorkersPage() {
 
   return (
     <main
-      className='container mx-auto px-4 py-8 bg-neutral-950 text-neutral-100'
+      className='container mx-auto px-4 py-8 text-neutral-100 bg-gradient-to-b from-neutral-900 via-neutral-950 to-black'
       role='main'
       aria-labelledby='workers-heading'
     >
-      <h1 id='workers-heading' className='text-3xl font-bold mb-8 text-center'>Our Workers</h1>
+      {!reduceMotion && (
+        <motion.div
+          aria-hidden
+          className='pointer-events-none fixed inset-0 z-[60] mix-blend-screen'
+          style={{
+            background: `radial-gradient(360px 300px at ${viewportMouse.x}px ${viewportMouse.y}px, rgba(255,255,255,0.22), transparent 60%), radial-gradient(680px 560px at ${viewportMouse.x}px ${viewportMouse.y}px, rgba(99,102,241,0.16), transparent 70%)`,
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        />
+      )}
+      {reduceMotion ? (
+        <h1 id='workers-heading' className='text-3xl font-bold mb-8 text-center'>Our Workers</h1>
+      ) : (
+        <motion.h1
+          id='workers-heading'
+          className='text-3xl font-bold mb-8 text-center'
+          style={{ y: titleY, opacity: titleOpacity }}
+        >
+          Our Workers
+        </motion.h1>
+      )}
 
-      {/* Content panel wrapper */}
-      <div className='mx-auto max-w-7xl rounded-xl bg-neutral-900 p-6 shadow ring-1 ring-neutral-800'>
+      {/* Content panel wrapper with neutral background */}
+      <div
+        ref={panelRef}
+        className='relative mx-auto max-w-7xl rounded-xl bg-neutral-900 p-6 shadow ring-1 ring-neutral-800 overflow-hidden'
+      >
+        <div className='relative z-10'>
         {/* Filters */}
         {!loading && !error && workersData.length > 0 && (
           <Filters
@@ -222,40 +265,61 @@ export default function WorkersPage() {
           </p>
         </div>
       ) : (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6' role='list'>
-          {paginatedWorkers.map((worker: WorkerType) => (
-            <article
-              key={worker.id}
-              className='border rounded-lg overflow-hidden shadow hover:shadow-lg bg-white text-neutral-900 focus:outline-none focus-visible:ring focus-visible:ring-neutral-400 transition-transform duration-200 hover:-translate-y-0.5'
-              tabIndex={0}
-              role='listitem'
-              aria-label={`${worker.name}, ${worker.service}, ₹${Math.round(worker.pricePerDay * 1.18)} per day including tax`}
-            >
-              <div className='w-full h-48 relative'>
-                <Image
-                  src={worker.image}
-                  alt={worker.name}
-                  fill
-                  className='object-cover'
-                  priority={worker.id <= 10}
-                />
-              </div>
-              <div className='p-4'>
-                <h2 className='text-xl font-semibold text-neutral-900'>{worker.name}</h2>
-                <p className='text-neutral-700'>{worker.service}</p>
-                <p className='mt-2 font-medium text-neutral-900'>
-                  ₹{Math.round(worker.pricePerDay * 1.18)} / day
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
+        <AnimatePresence mode='wait'>
+          <motion.div
+            key={page}
+            role='list'
+            className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'
+            initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.18, ease: 'easeOut' }}
+          >
+            {paginatedWorkers.map((worker: WorkerType, idx: number) => (
+              <motion.article
+                key={worker.id}
+                className='group border rounded-xl overflow-hidden bg-white text-neutral-900 shadow transition-shadow focus:outline-none focus-visible:ring focus-visible:ring-neutral-400'
+                tabIndex={0}
+                role='listitem'
+                aria-label={`${worker.name}, ${worker.service}, ₹${Math.round(worker.pricePerDay * 1.18)} per day including tax`}
+                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+                transition={{ duration: reduceMotion ? 0 : 0.2, delay: reduceMotion ? 0 : Math.min(idx * 0.03, 0.2) }}
+                whileHover={reduceMotion ? undefined : { y: -4, scale: 1.03, zIndex: 10, boxShadow: '0 16px 32px rgba(0,0,0,0.2)' }}
+                whileFocus={reduceMotion ? undefined : { y: -4, scale: 1.03, zIndex: 10, boxShadow: '0 16px 32px rgba(0,0,0,0.2)' }}
+              >
+                <motion.div
+                  className='w-full h-48 relative overflow-hidden'
+                  whileHover={reduceMotion ? undefined : { scale: 1.04 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.18, ease: 'easeOut' }}
+                >
+                  <Image
+                    src={worker.image}
+                    alt={worker.name}
+                    fill
+                    className='object-cover will-change-transform'
+                    priority={worker.id <= 10}
+                  />
+                </motion.div>
+                <div className='p-4'>
+                  <h2 className='text-xl font-semibold text-neutral-900'>{worker.name}</h2>
+                  <p className='text-neutral-700'>{worker.service}</p>
+                  <p className='mt-2 font-medium text-neutral-900'>
+                    ₹{Math.round(worker.pricePerDay * 1.18)} / day
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       )}
 
       {/* Pagination Controls */}
       {!loading && !error && (
         <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
       )}
+      </div>
       </div>
     </main>
   )
