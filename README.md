@@ -1,4 +1,4 @@
-# WorkerHub — Frontend Developer Assignment
+# WorkersHub — Frontend Developer Assignment
 
 [Live Demo → workershub.vercel.app](https://workershub.vercel.app/)
 
@@ -9,7 +9,7 @@ Allows users to browse, filter, and paginate worker profiles, with loading skele
 
 ## 🚀 Features
 
-- **Responsive layout**: 1 / 2 / 3 columns depending on screen size  
+- **Responsive layout**: 2 / 2 / 3 columns depending on screen size  
 - **Navbar**: sticky top header with mobile menu  
 - **Filters**: search by name or service, filter by service category and price range  
 - **Pagination**: navigate across multiple pages of worker cards  
