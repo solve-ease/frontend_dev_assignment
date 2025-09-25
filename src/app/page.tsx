@@ -2,10 +2,10 @@
 import { WorkerType } from "@/types/workers";
 import Image from "next/image";
 import { useState, useEffect, useMemo, useRef } from "react";
-import WorkerDetailsModal from "./WorkerDetailsModal";
-import WorkerCardSkeleton from "./WorkerCardSkeleton";
-import Pagination from "./Pagination";
-import Filters from "./Filters";
+import WorkerDetailsModal from "./components/WorkerDetailsModal";
+import WorkerCardSkeleton from "./components/WorkerCardSkeleton";
+import Pagination from "./components/Pagination";
+import Filters from "./components/Filters";
 
 export default function WorkersPage() {
   const [workersData, setWorkersData] = useState<WorkerType[]>([]);
