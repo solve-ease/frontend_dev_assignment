@@ -1,10 +1,16 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-  images:{
-    domains: ['images.unsplash.com','randomuser.me'],
-  }
+const nextConfig = {
+  experimental: { appDir: true },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "randomuser.me",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
+  reactStrictMode: true,
 };
 
-export default nextConfig;
+module.exports = nextConfig;
