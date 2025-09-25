@@ -1,19 +1,12 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: { appDir: true },
-  eslint: {
-    ignoreDuringBuilds: true,
+  reactStrictMode: true,
+  experimental: {
+    appDir: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "randomuser.me",
-        port: "",
-        pathname: "/**",
-      },
-    ],
+    domains: ["randomuser.me"],
   },
-  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
