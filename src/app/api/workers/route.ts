@@ -16,3 +16,6 @@ export async function GET() {
   }
 }
 
+git config --global user.email 
+"krishna.ks292002@gmail.com"
+  git config --global user.name "Krishna292002"
