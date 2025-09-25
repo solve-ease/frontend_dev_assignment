@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback, } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { WorkerType } from "@/types/workers";
-import WorkerCard from "@/app/components/WorkerCard";
-import Navbar from "@/app/components/Navbar";
+import WorkerCard from "./components/WorkerCard"
+import Navbar from "./components/Navbar"
+import Pagination from "./components/Pagination";
 import {
+  Search,
   AlertCircle,
 } from "lucide-react";
 
@@ -62,7 +64,7 @@ export default function WorkersPage() {
     searchQuery: "",
   });
 
-  const itemsPerPage = 1000
+  const itemsPerPage = 12;
 
   // API INTEGRATION WITH CACHING
 
@@ -157,7 +159,8 @@ export default function WorkersPage() {
     filteredWorkers,
     paginatedWorkers,
     totalPages,
-      } = useMemo(() => {
+    priceRange,
+  } = useMemo(() => {
     // Get unique services
     const services = Array.from(
       new Set(workers.map((worker) => worker.service))
@@ -205,14 +208,39 @@ export default function WorkersPage() {
     };
   }, [workers, filters, currentPage, itemsPerPage]);
 
- 
+  // Update price range in filters when workers data changes
+  useEffect(() => {
+    if (workers.length > 0) {
+      setFilters((prev) => {
+        // If user has not changed defaults, set to API range
+        if (prev.minPrice === 0 && prev.maxPrice === 1000) {
+          return {
+            ...prev,
+            minPrice: priceRange.min,
+            maxPrice: priceRange.max,
+          };
+        }
+        // otherwise preserve user's values but clamp them within the new range
+        return {
+          ...prev,
+          minPrice: Math.max(priceRange.min, prev.minPrice),
+          maxPrice: Math.min(priceRange.max, prev.maxPrice),
+        };
+      });
+    }
+  }, [workers.length, priceRange.min, priceRange.max]);
 
   // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [filters]);
 
- 
+  // EVENT HANDLERS
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   // ERROR STATE
 
@@ -261,8 +289,7 @@ export default function WorkersPage() {
             </div>
           )}
         </div>
-
-        
+         
 
           {/* Workers Grid */}
           <div className="lg:col-span-3">
@@ -282,7 +309,7 @@ export default function WorkersPage() {
               </div>
             )}
 
-           
+          
 
             {/* Workers Grid */}
             {!loading && paginatedWorkers.length > 0 && (
@@ -293,8 +320,17 @@ export default function WorkersPage() {
               </div>
             )}
 
+          
 
-        </div>
+            {/* Pagination */}
+            {!loading && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            )}
+          </div>
       </main>
     </div>
   );
