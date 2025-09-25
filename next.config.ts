@@ -1,10 +1,21 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['randomuser.me'], // external domain allow karo
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'randomuser.me',
+        pathname: '/**', // allow all paths
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      }
+    ]
   },
-}
+};
 
-module.exports = nextConfig
-
+export default nextConfig;
