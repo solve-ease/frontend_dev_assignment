@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 
 export default function WorkersPage() {
   const [workersData, setWorkersData] = useState<WorkerType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [minPrice, setMinPrice] = useState<number | ''>('');
   const [maxPrice, setMaxPrice] = useState<number | ''>('');
@@ -14,28 +16,35 @@ export default function WorkersPage() {
   const itemsPerPage = 9;
 
   useEffect(() => {
-    const loadData = async () => {
+    const fetchWorkers = async () => {
+      setLoading(true);
+      setError('');
       try {
-        const response = await import('../../workers.json');
-        setWorkersData(response.default);
-      } catch (error) {
-        console.error('Failed to load workers:', error);
+        const response = await fetch('/api/workers');
+        if (!response.ok) throw new Error('Failed to fetch workers');
+        const json = await response.json();
+        setWorkersData(json.data || []); // Use the 'data' property from API response
+      } catch (err: any) {
+        setError(err.message || 'Unknown error');
       }
+      setLoading(false);
     };
-    loadData();
+    fetchWorkers();
   }, []);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [minPrice, maxPrice, selectedService]);
 
-  const filteredWorkers = workersData
-    .filter((worker) => worker.pricePerDay > 0)
-    .filter((worker) => worker.id !== null)
-    .filter((worker) => (minPrice === '' ? true : worker.pricePerDay >= minPrice))
-    .filter((worker) => (maxPrice === '' ? true : worker.pricePerDay <= maxPrice))
-    .filter((worker) => (selectedService === '' ? true : worker.service === selectedService))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const filteredWorkers = Array.isArray(workersData)
+    ? workersData
+        .filter((worker) => worker.pricePerDay > 0)
+        .filter((worker) => worker.id !== null)
+        .filter((worker) => (minPrice === '' ? true : worker.pricePerDay >= minPrice))
+        .filter((worker) => (maxPrice === '' ? true : worker.pricePerDay <= maxPrice))
+        .filter((worker) => (selectedService === '' ? true : worker.service === selectedService))
+        .sort((a, b) => a.name.localeCompare(b.name))
+    : [];
 
   const totalPages = Math.ceil(filteredWorkers.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -54,6 +63,33 @@ export default function WorkersPage() {
   const goPrev = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <main className="container mx-auto px-4 py-8 bg-[#000000]">
+          <h1 className="text-3xl font-bold mb-8 text-center text-white">Loading workers...</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Array.from({ length: itemsPerPage }, (_, idx) => (
+              <SkeletonCard key={idx} />
+            ))}
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <main className="container mx-auto px-4 py-8 bg-[#000000]">
+          <h1 className="text-3xl font-bold mb-8 text-center text-red-600">Error: {error}</h1>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
@@ -93,13 +129,13 @@ export default function WorkersPage() {
 
         {/* Workers Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {workersData.length === 0
-            ? Array.from({ length: itemsPerPage }, (_, idx) => <SkeletonCard key={idx} />)
-            : currentWorkers.map((worker: WorkerType) => <WorkerCard key={worker.id} worker={worker} />)}
+          {currentWorkers.map((worker: WorkerType) => (
+            <WorkerCard key={worker.id} worker={worker} />
+          ))}
         </div>
 
         {/* Pagination Controls */}
-        <div className="flex justify-center space-x-2 mt-6">
+        <div className="flex justify-center space-x-2 mt-6 overflow-auto">
           <button
             onClick={goPrev}
             disabled={currentPage === 1}

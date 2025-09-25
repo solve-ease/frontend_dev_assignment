@@ -5,7 +5,7 @@ export async function GET() {
   try {
     return NextResponse.json({
       success: true,
-      data: workersDat
+      data: workersData
     })
   } catch (error) {
     console.error('API Error:', error)
@@ -16,6 +16,3 @@ export async function GET() {
   }
 }
 
-git config --global user.email 
-"krishna.ks292002@gmail.com"
-  git config --global user.name "Krishna292002"
