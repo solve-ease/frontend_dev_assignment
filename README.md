@@ -42,12 +42,12 @@ This is a modern, responsive web application built with **Next.js 14**, **TypeSc
 
 #### **Before Implementation**
 
-![Before Screenshot 1](./Before.png)
+![Before Screenshot 1](./public/Before.png)
 _Original layout with basic styling and no optimizations_
 
 #### **After Implementation**
 
-![After Screenshot 1](./After.png)
+![After Screenshot 1](./public/After.png)
 _Modern, responsive design with professional styling_
 
 </div>
