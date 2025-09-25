@@ -16,6 +16,7 @@ const WorkerCard = React.memo(({ worker }: { worker: WorkerType }) => {
           height={192}
           className="object-cover w-full h-48"
           priority={worker.id === 1}
+          unoptimized
         />
       </div>
       <div className="p-4">
