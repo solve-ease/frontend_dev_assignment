@@ -60,7 +60,7 @@ While I believe this solution meets the assignment's objectives, here are a few 
 
 ## Submission Details
 
-GitHub Branch: `https://github.com/solve-ease/frontend_dev_assignment/tree/assignment/shagufta_khanam`
-Live URL:** [Paste your Vercel/Netlify URL here]
+GitHub Branch: `https://github.com/Shagufta489/frontend_dev_assignment/tree/assignment/shagufta-khanam`
+Live URL: `https://frontendinternassignment.netlify.app/`
 
 Thank you for this opportunity. I enjoyed working on this assignment and look forward to hearing from you.
