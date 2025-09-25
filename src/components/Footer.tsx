@@ -104,7 +104,7 @@ export default function Footer() {
           viewport={{ once: true }}
         >
           <p className='text-gray-400 text-sm'>
-            © 2024 WorkHub. All rights reserved. |
+            © 2025 WorkHub. All rights reserved. |
             <a href='#' className='hover:text-white transition-colors ml-1'>Privacy Policy</a> |
             <a href='#' className='hover:text-white transition-colors ml-1'>Terms of Service</a>
           </p>
