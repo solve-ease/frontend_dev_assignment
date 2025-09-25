@@ -28,13 +28,12 @@ export default function WorkersPageClient() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await import("../../public/workers.json");
-        setWorkersData(response.default);
+        const res = await fetch("/workers.json"); // fetch JSON from public folder
+        const data = await res.json();
+        setWorkersData(data);
         setPriceFilter(
           Math.max(
-            ...response.default.map((w: WorkerType) =>
-              Math.round(w.pricePerDay * 1.18)
-            )
+            ...data.map((w: WorkerType) => Math.round(w.pricePerDay * 1.18))
           )
         );
       } catch (error) {
