@@ -2,24 +2,17 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { WorkerType } from "@/types/workers";
-import WorkerCard from "./components/WorkerCard"
-import Navbar from "./components/Navbar"
-import Pagination from "./components/Pagination";
-import Filters from "./components/Filters";
+import {Filters, Navbar, Pagination, SkeletonCard, WorkerCard} from './components/index'
 import { FilterState } from "@/types/workers";
 import { ApiResponse } from "@/types/workers";
-import {
-  Filter,
-  Search,
-  AlertCircle,
-} from "lucide-react";
+import { Filter, Search, AlertCircle } from "lucide-react";
 
 
 // MAIN WORKERS PAGE COMPONENT
 
 export default function WorkersPage() {
 
-  // LEGACY CODE (COMMENTED OUT - DON'T DELETE)
+  // LEGACY CODE (COMMENTED OUT)
 
   /*
   const [workersData, setWorkersData] = useState<WorkerType[]>([])
@@ -54,7 +47,9 @@ export default function WorkersPage() {
 
   const itemsPerPage = 12;
 
+  // ============================================================================
   // API INTEGRATION WITH CACHING
+  // ============================================================================
 
   const fetchWorkers = useCallback(async () => {
     try {
@@ -141,7 +136,9 @@ export default function WorkersPage() {
     fetchWorkers();
   }, [fetchWorkers]);
 
+  // ============================================================================
   // COMPUTED VALUES WITH MEMOIZATION
+  // ============================================================================
 
   const {
     filteredWorkers,
@@ -224,7 +221,9 @@ export default function WorkersPage() {
     setCurrentPage(1);
   }, [filters]);
 
+  // ============================================================================
   // EVENT HANDLERS
+  // ============================================================================
 
   const handleFiltersChange = useCallback((newFilters: FilterState) => {
     setFilters(newFilters);
@@ -235,7 +234,9 @@ export default function WorkersPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  // ============================================================================
   // ERROR STATE
+  // ============================================================================
 
   if (error && workers.length === 0) {
     return (
@@ -260,7 +261,9 @@ export default function WorkersPage() {
     );
   }
 
+  // ============================================================================
   // MAIN RENDER
+  // ============================================================================
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -334,6 +337,14 @@ export default function WorkersPage() {
               </div>
             )}
 
+            {/* Loading State */}
+            {loading && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 12 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))}
+              </div>
+            )}
 
             {/* Workers Grid */}
             {!loading && paginatedWorkers.length > 0 && (
