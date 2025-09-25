@@ -1,57 +1,65 @@
 'use client'
+import { useState } from 'react'
+import useSWR from 'swr'
 import { WorkerType } from '@/types/workers'
-import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import WorkersGrid from '@/components/WorkersGrid'
+import Pagination from '@/components/Pagination'
+import Filters from '@/components/Filters';
+
+// import Filters from '@/components/filters'
+
+
+const fetcher = async (url: string): Promise<{ data: WorkerType[] }> => {
+  const res = await fetch(url)
+  if (!res.ok) throw new Error('Failed to fetch workers')
+  return res.json()
+}
 
 export default function WorkersPage() {
-  const [workersData, setWorkersData] = useState<WorkerType[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [priceFilter, setPriceFilter] = useState('all')
+  const [serviceFilter, setServiceFilter] = useState('all')
+  const itemsPerPage = 9
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await import('../../workers.json')
-        setWorkersData(response.default)
-      } catch (error) {
-        console.error('Failed to load workers:', error)
-      }
-    }
-    loadData()
-    loadData()
-  }, [])
+  const { data, error, isLoading } = useSWR('/api/workers', fetcher, {
+    revalidateOnFocus: false,
+    dedupingInterval: 60_000
+  })
+
+  const workersData: WorkerType[] = data?.data || []
+
+  const filteredData = workersData
+    .filter(worker => {
+      const effectivePrice = Math.round(worker.pricePerDay * 1.18)
+      if (priceFilter === 'low') return effectivePrice < 500
+      if (priceFilter === 'mid') return effectivePrice >= 500 && effectivePrice <= 1000
+      if (priceFilter === 'high') return effectivePrice > 1000
+      return true
+    })
+    .filter(worker => serviceFilter === 'all' || worker.service.toLowerCase() === serviceFilter.toLowerCase())
+
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const paginatedData = filteredData.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage)
 
   return (
-    <main className='container mx-auto px-4 py-8 bg-[#000000]'>
-      <h1 className='text-3xl font-bold mb-8 text-center'>Our Workers</h1>
+    <main className="container mx-auto px-4 py-8 bg-black min-h-screen">
+      <Filters
+        priceFilter={priceFilter}
+        serviceFilter={serviceFilter}
+        setPriceFilter={setPriceFilter}
+        setServiceFilter={setServiceFilter}
+        setCurrentPage={setCurrentPage}
+      />
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-6'>
-        {workersData
-          .filter((worker) => worker.pricePerDay > 0)
-          .filter((worker) => worker.id !== null)
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((worker: WorkerType) => (
-            <div
-              key={worker.id}
-              className='border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300'
-            >
-              <div className='w-full h-48 relative'>
-                <Image
-                  src={worker.image}
-                  alt={worker.name}
-                  fill
-                  className='object-cover'
-                  priority={worker.id <= 10}
-                />
-              </div>
-              <div className='p-4'>
-                <h2 className='text-xl font-semibold'>{worker.name}</h2>
-                <p className='text-gray-600'>{worker.service}</p>
-                <p className='mt-2 font-medium'>
-                  ₹{Math.round(worker.pricePerDay * 1.18)} / day
-                </p>
-              </div>
-            </div>
-          ))}
-      </div>
+      <WorkersGrid workers={paginatedData} isLoading={isLoading} error={error} />
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </main>
   )
 }
