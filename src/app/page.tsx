@@ -2,6 +2,7 @@
 import { WorkerType } from "@/types/workers";
 import Image from "next/image";
 import { useState, useEffect, useMemo, useRef } from "react";
+import WorkerDetailsModal from "./WorkerDetailsModal";
 import WorkerCardSkeleton from "./WorkerCardSkeleton";
 import Pagination from "./Pagination";
 import Filters from "./Filters";
@@ -17,6 +18,27 @@ export default function WorkersPage() {
   const CARDS_PER_PAGE = 12;
   // Basic cache to prevent redundant API calls
   const cacheRef = useRef<WorkerType[] | null>(null);
+
+  // Modal state for worker details
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedWorker, setSelectedWorker] = useState<WorkerType | null>(null);
+
+  const handleViewProfile = (worker: WorkerType) => {
+    setSelectedWorker(worker);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedWorker(null);
+  };
+
+  const handleBookWorker = (worker: WorkerType) => {
+    // You can add booking logic here (e.g., API call, toast, etc.)
+    alert(`Booked ${worker.name}!`);
+    setModalOpen(false);
+    setSelectedWorker(null);
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -116,7 +138,10 @@ export default function WorkersPage() {
   return (
     <main className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-pink-50 to-yellow-50 pb-16">
       <div className="container mx-auto px-2 sm:px-4 py-6">
-        <h1 className="text-4xl font-extrabold mb-7 text-center tracking-tight bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(59,130,246,0.25)] animate-pulse" style={{ WebkitTextStroke: '1px rgba(59,130,246,0.10)' }}>
+        <h1
+          className="text-4xl font-extrabold mb-7 text-center tracking-tight bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(59,130,246,0.25)] animate-pulse"
+          style={{ WebkitTextStroke: "1px rgba(59,130,246,0.10)" }}
+        >
           Our Workers
         </h1>
 
@@ -137,7 +162,7 @@ export default function WorkersPage() {
           />
         </div>
 
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 md:gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 md:gap-8 lg:gap-10">
           {loading ? (
             Array.from({ length: CARDS_PER_PAGE }).map((_, i) => (
               <WorkerCardSkeleton key={i} />
@@ -209,7 +234,10 @@ export default function WorkersPage() {
                     </div>
                   </div>
                   <div className="w-full px-4 pb-3 pt-1 flex items-center justify-end">
-                    <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-400 text-white font-semibold text-sm shadow hover:brightness-110 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <button
+                      className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-400 text-white font-semibold text-sm shadow hover:brightness-110 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                      onClick={() => handleViewProfile(worker)}
+                    >
                       View Profile
                     </button>
                   </div>
@@ -228,6 +256,12 @@ export default function WorkersPage() {
           />
         )}
       </div>
+      <WorkerDetailsModal
+        worker={selectedWorker}
+        open={modalOpen}
+        onClose={handleCloseModal}
+        onBook={handleBookWorker}
+      />
     </main>
   );
 }
