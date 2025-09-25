@@ -1,57 +1,168 @@
-'use client'
-import { WorkerType } from '@/types/workers'
-import Image from 'next/image'
-import { useState, useEffect } from 'react'
+'use client';
+import Navbar from '../components/Navbar';
+import WorkerCard from '../components/WorkerCard';
+import SkeletonCard from '../components/SkeletonCard';
+import { WorkerType } from '@/types/workers';
+import { useState, useEffect } from 'react';
 
 export default function WorkersPage() {
-  const [workersData, setWorkersData] = useState<WorkerType[]>([])
+  const [workersData, setWorkersData] = useState<WorkerType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [minPrice, setMinPrice] = useState<number | ''>('');
+  const [maxPrice, setMaxPrice] = useState<number | ''>('');
+  const [selectedService, setSelectedService] = useState<string>('');
+  const itemsPerPage = 9;
 
   useEffect(() => {
-    const loadData = async () => {
+    const fetchWorkers = async () => {
+      setLoading(true);
+      setError('');
       try {
-        const response = await import('../../workers.json')
-        setWorkersData(response.default)
-      } catch (error) {
-        console.error('Failed to load workers:', error)
+        const response = await fetch('/api/workers');
+        if (!response.ok) throw new Error('Failed to fetch workers');
+        const json = await response.json();
+        setWorkersData(json.data || []); // Use the 'data' property from API response
+      } catch (err: any) {
+        setError(err.message || 'Unknown error');
       }
-    }
-    loadData()
-    loadData()
-  }, [])
+      setLoading(false);
+    };
+    fetchWorkers();
+  }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [minPrice, maxPrice, selectedService]);
+
+  const filteredWorkers = Array.isArray(workersData)
+    ? workersData
+        .filter((worker) => worker.pricePerDay > 0)
+        .filter((worker) => worker.id !== null)
+        .filter((worker) => (minPrice === '' ? true : worker.pricePerDay >= minPrice))
+        .filter((worker) => (maxPrice === '' ? true : worker.pricePerDay <= maxPrice))
+        .filter((worker) => (selectedService === '' ? true : worker.service === selectedService))
+        .sort((a, b) => a.name.localeCompare(b.name))
+    : [];
+
+  const totalPages = Math.ceil(filteredWorkers.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentWorkers = filteredWorkers.slice(indexOfFirstItem, indexOfLastItem);
+
+  const goToPage = (pageNumber: number) => {
+    if (pageNumber < 1 || pageNumber > totalPages) return;
+    setCurrentPage(pageNumber);
+  };
+
+  const goNext = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const goPrev = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <main className="container mx-auto px-4 py-8 bg-[#000000]">
+          <h1 className="text-3xl font-bold mb-8 text-center text-white">Loading workers...</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Array.from({ length: itemsPerPage }, (_, idx) => (
+              <SkeletonCard key={idx} />
+            ))}
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <main className="container mx-auto px-4 py-8 bg-[#000000]">
+          <h1 className="text-3xl font-bold mb-8 text-center text-red-600">Error: {error}</h1>
+        </main>
+      </>
+    );
+  }
 
   return (
-    <main className='container mx-auto px-4 py-8 bg-[#000000]'>
-      <h1 className='text-3xl font-bold mb-8 text-center'>Our Workers</h1>
+    <>
+      <Navbar />
+      <main className="container mx-auto px-4 py-8 bg-[#000000]">
+        <h1 className="text-3xl font-bold mb-8 text-center text-white">Our Workers</h1>
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-6'>
-        {workersData
-          .filter((worker) => worker.pricePerDay > 0)
-          .filter((worker) => worker.id !== null)
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((worker: WorkerType) => (
-            <div
-              key={worker.id}
-              className='border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300'
-            >
-              <div className='w-full h-48 relative'>
-                <Image
-                  src={worker.image}
-                  alt={worker.name}
-                  fill
-                  className='object-cover'
-                  priority={worker.id <= 10}
-                />
-              </div>
-              <div className='p-4'>
-                <h2 className='text-xl font-semibold'>{worker.name}</h2>
-                <p className='text-gray-600'>{worker.service}</p>
-                <p className='mt-2 font-medium'>
-                  ₹{Math.round(worker.pricePerDay * 1.18)} / day
-                </p>
-              </div>
-            </div>
+        {/* Filters Section */}
+        <div className="mb-6 flex flex-wrap justify-center space-x-4 space-y-2">
+          <input
+            type="number"
+            placeholder="Min Price"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value === '' ? '' : Number(e.target.value))}
+            className="border p-2 rounded w-40"
+          />
+          <input
+            type="number"
+            placeholder="Max Price"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value === '' ? '' : Number(e.target.value))}
+            className="border p-2 rounded w-40"
+          />
+          <select
+            value={selectedService}
+            onChange={(e) => setSelectedService(e.target.value)}
+            className="border p-2 rounded w-40"
+          >
+            <option value="">All Services</option>
+            {Array.from(new Set(workersData.map((w) => w.service))).map((service) => (
+              <option key={service} value={service}>
+                {service}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Workers Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {currentWorkers.map((worker: WorkerType) => (
+            <WorkerCard key={worker.id} worker={worker} />
           ))}
-      </div>
-    </main>
-  )
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-center space-x-2 mt-6 overflow-auto">
+          <button
+            onClick={goPrev}
+            disabled={currentPage === 1}
+            className="px-3 py-1 border rounded disabled:opacity-50 text-white bg-gray-700"
+          >
+            Prev
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => goToPage(i + 1)}
+              className={`px-3 py-1 border rounded ${
+                currentPage === i + 1 ? 'bg-blue-600 text-white' : 'text-white bg-gray-700'
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button
+            onClick={goNext}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 border rounded disabled:opacity-50 text-white bg-gray-700"
+          >
+            Next
+          </button>
+        </div>
+      </main>
+    </>
+  );
 }

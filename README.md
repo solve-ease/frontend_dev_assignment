@@ -85,3 +85,12 @@ This assignment is designed to assess your practical skills in **React, Next.js,
 - Document any **extra improvements** you make in your submission.
 
 Good luck 🚀  
+
+
+
+
+
+During the assignment, I worked on each task by thoroughly testing the implemented features after completion. For each task, I committed the changes to separate branches and pushed them to the remote repository to maintain an independent snapshot of the code at every stage. This organized version control approach ensured both the quality of the project and the traceability of changes throughout development.
+
+## Branches
+- assignment/krishna-sharma: Complete assignment with all implemented features.
