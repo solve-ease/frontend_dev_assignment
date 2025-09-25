@@ -4,147 +4,147 @@
     "name": "Anthony Taylor",
     "service": "Welder",
     "pricePerDay": 347,
-    "image": "https://randomuser.me/api/portraits/men/12.jpg"
+     "image": "/images/users/12.jpg"
   },
   {
     "id": 2,
     "name": "Melissa Harris",
     "service": "Welder",
     "pricePerDay": 337,
-    "image": "https://randomuser.me/api/portraits/women/81.jpg"
+     "image": "/images/users/12.jpg"
   },
   {
     "id": 3,
     "name": "Jane Harris",
     "service": "Painter",
     "pricePerDay": 853,
-    "image": "https://randomuser.me/api/portraits/men/80.jpg"
+    "image": "/images/users/12.jpg"
   },
   {
     "id": 4,
     "name": "Daniel Lopez",
     "service": "Plumber",
     "pricePerDay": 952,
-    "image": "https://randomuser.me/api/portraits/men/37.jpg"
+     "image": "/images/users/12.jpg"
   },
   {
     "id": 5,
     "name": "Amanda Lewis",
     "service": "Roofer",
     "pricePerDay": 431,
-    "image": "https://randomuser.me/api/portraits/women/50.jpg"
+    "image": "/images/users/12.jpg"
   },
   {
     "id": 6,
     "name": "David Gonzalez",
     "service": "Plumber",
     "pricePerDay": 669,
-    "image": "https://randomuser.me/api/portraits/women/73.jpg"
+    "image": "/images/users/12.jpg"
   },
   {
     "id": 7,
     "name": "Mark Thomas",
     "service": "Driver",
     "pricePerDay": 745,
-    "image": "https://randomuser.me/api/portraits/women/74.jpg"
+    "image": "/images/users/24.jpg"
   },
   {
     "id": 8,
     "name": "William Thompson",
     "service": "Gardener",
     "pricePerDay": 504,
-    "image": "https://randomuser.me/api/portraits/men/24.jpg"
+    "image": "/images/users/24.jpg"
   },
   {
     "id": 9,
     "name": "William Thompson",
     "service": "Roofer",
     "pricePerDay": 540,
-    "image": "https://randomuser.me/api/portraits/men/37.jpg"
+    "image": "/images/users/37.jpg"
   },
   {
     "id": 10,
     "name": "Sarah White",
     "service": "Driver",
     "pricePerDay": 842,
-    "image": "https://randomuser.me/api/portraits/men/64.jpg"
+    "image": "/images/users/50.jpg"
   },
   {
     "id": 11,
     "name": "David Thompson",
     "service": "Mechanic",
     "pricePerDay": 904,
-    "image": "https://randomuser.me/api/portraits/women/30.jpg"
+    "image": "/images/users/81.jpg"
   },
   {
     "id": 12,
     "name": "Emily Martin",
     "service": "Plumber",
     "pricePerDay": 759,
-    "image": "https://randomuser.me/api/portraits/women/53.jpg"
+    "image": "/images/users/80.jpg"
   },
   {
     "id": 13,
     "name": "John Lewis",
     "service": "Plumber",
     "pricePerDay": 523,
-    "image": "https://randomuser.me/api/portraits/men/12.jpg"
+    "image": "/images/users/81.jpg"
   },
   {
     "id": 14,
     "name": "Amanda Rodriguez",
     "service": "Plumber",
     "pricePerDay": 602,
-    "image": "https://randomuser.me/api/portraits/women/45.jpg"
+    "image": "/images/users/81.jpg"
   },
   {
     "id": 15,
     "name": "Jessica Sanchez",
     "service": "Mechanic",
     "pricePerDay": 582,
-    "image": "https://randomuser.me/api/portraits/men/69.jpg"
+    "image": "/images/users/80.jpg"
   },
   {
     "id": 16,
     "name": "John Lewis",
     "service": "Gardener",
     "pricePerDay": 781,
-    "image": "https://randomuser.me/api/portraits/men/48.jpg"
+    "image": "/images/users/37.jpg"
   },
   {
     "id": 17,
     "name": "Anthony Brown",
     "service": "HVAC Technician",
     "pricePerDay": 436,
-    "image": "https://randomuser.me/api/portraits/women/53.jpg"
+    "image": "/images/users/80.jpg"
   },
   {
     "id": 18,
     "name": "Steven Thompson",
     "service": "Electrician",
     "pricePerDay": 383,
-    "image": "https://randomuser.me/api/portraits/men/80.jpg"
+    "image": "/images/users/80.jpg"
   },
   {
     "id": 19,
     "name": "Sarah Harris",
     "service": "Driver",
     "pricePerDay": 780,
-    "image": "https://randomuser.me/api/portraits/women/99.jpg"
+    "image": "/images/users/80.jpg"
   },
   {
     "id": 20,
     "name": "William Jones",
     "service": "Cleaner",
     "pricePerDay": 854,
-    "image": "https://randomuser.me/api/portraits/women/13.jpg"
+    "image": "/images/users/80.jpg"
   },
   {
     "id": 21,
     "name": "Helen Taylor",
     "service": "Cleaner",
     "pricePerDay": 906,
-    "image": "https://randomuser.me/api/portraits/men/24.jpg"
+    "image": "/images/users/80.jpg"
   },
   {
     "id": 22,
@@ -6955,48 +6955,48 @@
     "name": "Stephanie Thompson",
     "service": "Roofer",
     "pricePerDay": 217,
-    "image": "https://randomuser.me/api/portraits/men/53.jpg"
+    "image": "/images/users/12.jpg"
   },
   {
     "id": 995,
     "name": "Lisa Martin",
     "service": "Roofer",
     "pricePerDay": 765,
-    "image": "https://randomuser.me/api/portraits/men/92.jpg"
+    "image": "/images/users/12.jpg"
   },
   {
     "id": 996,
     "name": "Helen Ramirez",
     "service": "Plumber",
     "pricePerDay": 394,
-    "image": "https://randomuser.me/api/portraits/men/61.jpg"
+    "image": "/images/users/12.jpg"
   },
   {
     "id": 997,
     "name": "Deborah Gonzalez",
     "service": "Electrician",
     "pricePerDay": 685,
-    "image": "https://randomuser.me/api/portraits/women/98.jpg"
+   "image": "/images/users/12.jpg"
   },
   {
     "id": 998,
     "name": "Daniel Martinez",
     "service": "Driver",
     "pricePerDay": 649,
-    "image": "https://randomuser.me/api/portraits/women/70.jpg"
+     "image": "/images/users/12.jpg"
   },
   {
     "id": 999,
     "name": "James Clark",
     "service": "Gardener",
     "pricePerDay": 400,
-    "image": "https://randomuser.me/api/portraits/women/85.jpg"
+     "image": "/images/users/12.jpg"
   },
   {
     "id": 1000,
     "name": "Anthony Garcia",
     "service": "Gardener",
     "pricePerDay": 700,
-    "image": "https://randomuser.me/api/portraits/women/84.jpg"
+   "image": "/images/users/12.jpg"
   }
 ]
