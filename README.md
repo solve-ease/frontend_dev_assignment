@@ -84,4 +84,31 @@ This assignment is designed to assess your practical skills in **React, Next.js,
 - Add comment for any **bug fix or optimization.** 
 - Document any **extra improvements** you make in your submission.
 
-Good luck 🚀  
+## How to run locally
+
+```bash
+npm install
+npm run dev
+```
+Node version: 18.x+
+
+## What I implemented
+
+- Responsive card grid and improved card UI
+- Sticky, responsive navbar
+- Pagination and filters for workers
+- API integration with loading/error states
+- Performance optimizations (lazy loading, memoization)
+- Unit/component tests
+
+## Trade-offs / Known Issues
+
+- [List any limitations or decisions you made]
+
+## How to run tests
+
+```bash
+npm test
+```
+
+Good luck 🚀
