@@ -54,7 +54,7 @@ export default function WorkersPage() {
     loadData();
   }, []);
 
-  // Get all unique services
+  // Get all unique services here
   const allServices = useMemo(() => {
     return Array.from(new Set(workersData.map((w) => w.service))).sort();
   }, [workersData]);
