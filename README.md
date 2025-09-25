@@ -3,7 +3,7 @@
 [Live Demo → workershub.vercel.app](https://workershub.vercel.app/)
 
 A responsive worker directory built with **Next.js**, **TypeScript**, and **Tailwind CSS**.  
-Allows users to browse, filter, and paginate worker profiles, with loading skeletons, dark mode, and image fallbacks.
+Allows users to browse, filter, and paginate worker profiles, with loading skeletons, and image fallbacks.
 
 ---
 
