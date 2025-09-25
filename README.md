@@ -1,9 +1,5 @@
 # Frontend Developer Intern Assignment  
 
-## Mandatory Tasks
-- Follow SolveEase on [Github](https://github.com/solve-ease) and [Linkedin](https://www.linkedin.com/company/solve-ease)
-- Star this repo
-
 ## Objective  
 This assignment is designed to assess your practical skills in **React, Next.js, TypeScript, Tailwind CSS, and frontend optimizations**. You will work on an existing **Next.js application** that contains layout/design issues and some configuration bugs. Your task is to identify and resolve these issues, and implement the listed features to enhance the overall user experience. 
 
@@ -48,3 +44,4 @@ This assignment is designed to assess your practical skills in **React, Next.js,
   - **Loading state** (use skeleton screens).  
   - **Error handling** (show a friendly error message if API fails).  
   - **Basic caching or memoization** to prevent redundant calls. 
+
