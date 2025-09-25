@@ -4,11 +4,15 @@ import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
 import WorkerCardSkeleton from "./WorkerCardSkeleton";
 import Pagination from "./Pagination";
+import Filters from "./Filters";
 
 export default function WorkersPage() {
   const [workersData, setWorkersData] = useState<WorkerType[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedService, setSelectedService] = useState("");
+  const [selectedMin, setSelectedMin] = useState(0);
+  const [selectedMax, setSelectedMax] = useState(0);
   const CARDS_PER_PAGE = 12;
 
   useEffect(() => {
@@ -25,13 +29,45 @@ export default function WorkersPage() {
     loadData();
   }, []);
 
+  // Get all unique services
+  const allServices = useMemo(() => {
+    return Array.from(new Set(workersData.map((w) => w.service))).sort();
+  }, [workersData]);
+
+  // Get min/max price
+  const minPrice = useMemo(() => {
+    return workersData.length
+      ? Math.min(...workersData.map((w) => w.pricePerDay))
+      : 0;
+  }, [workersData]);
+  const maxPrice = useMemo(() => {
+    return workersData.length
+      ? Math.max(...workersData.map((w) => w.pricePerDay))
+      : 0;
+  }, [workersData]);
+
+  // Set initial price range when data loads
+  useEffect(() => {
+    if (workersData.length) {
+      setSelectedMin(minPrice);
+      setSelectedMax(maxPrice);
+    }
+  }, [minPrice, maxPrice, workersData.length]);
+
   // Memoize filtered and sorted workers
   const filteredWorkers = useMemo(() => {
     return workersData
       .filter((worker) => worker.pricePerDay > 0)
       .filter((worker) => worker.id !== null)
+      .filter((worker) =>
+        selectedService ? worker.service === selectedService : true
+      )
+      .filter(
+        (worker) =>
+          worker.pricePerDay >= selectedMin && worker.pricePerDay <= selectedMax
+      )
       .sort((a, b) => a.name.localeCompare(b.name));
-  }, [workersData]);
+  }, [workersData, selectedService, selectedMin, selectedMax]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredWorkers.length / CARDS_PER_PAGE);
@@ -47,9 +83,29 @@ export default function WorkersPage() {
     }
   };
 
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedService, selectedMin, selectedMax]);
+
   return (
     <main className="container mx-auto px-2 sm:px-4 py-8 bg-[#f6eded] min-h-screen">
       <h1 className="text-3xl font-bold mb-8 text-center">Our Workers</h1>
+
+      {/* Filters */}
+      <Filters
+        services={allServices}
+        selectedService={selectedService}
+        onServiceChange={setSelectedService}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+        selectedMin={selectedMin}
+        selectedMax={selectedMax}
+        onPriceChange={(min, max) => {
+          setSelectedMin(min);
+          setSelectedMax(max);
+        }}
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {loading
