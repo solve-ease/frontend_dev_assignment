@@ -11,25 +11,20 @@ export default function Navbar() {
         >
           SolveEase Workers
         </Link>
-        <div className="flex gap-4">
-          <Link
-            href="#"
-            className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="#"
-            className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-          >
-            About
-          </Link>
-          <Link
-            href="#"
-            className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-          >
-            Contact
-          </Link>
+        <div className="flex gap-3 md:gap-4">
+          {[
+            { label: "Home", href: "/" },
+            { label: "About", href: "/About" },
+            { label: "Contact", href: "/Contact" },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="font-semibold text-base bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-400 bg-clip-text text-transparent transition-all duration-200 hover:underline hover:decoration-2 hover:decoration-pink-400 focus:outline-none px-1"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>
