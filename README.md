@@ -1,87 +1,85 @@
-# Frontend Developer Intern Assignment  
+# WorkerHub
 
-## Mandatory Tasks
-- Follow SolveEase on [Github](https://github.com/solve-ease) and [Linkedin](https://www.linkedin.com/company/solve-ease)
-- Star this repo
+A web application for browsing and connecting with skilled workers across different services.
 
-## Objective  
-This assignment is designed to assess your practical skills in **React, Next.js, TypeScript, Tailwind CSS, and frontend optimizations**. You will work on an existing **Next.js application** that contains layout/design issues and some configuration bugs. Your task is to identify and resolve these issues, and implement the listed features to enhance the overall user experience. 
+## Getting Started
 
----
+This is a Next.js project that helps users find workers for various services like plumbing, electrical work, carpentry, and more.
 
-## Tasks  
+### Installation
 
-### 1. Fix Cards Layout & Responsiveness  
-- Correct the existing card grid layout.  
-- Improve the overall card design (UI/UX sensibility expected).  
-- Ensure the page is fully responsive across devices (desktop, tablet, mobile).  
+```bash
+npm install
+npm run dev
+```
 
-### 2. Add Navbar (Sticky)  
-- Implement a navigation bar that remains fixed at the top while scrolling.  
-- Design should be clean and responsive.  
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 3. Optimize Page Load & Performance  
-- Implement optimizations such as:  
-  - **Lazy loading** for images and non-critical components.  
-  - **Memoization** to avoid unnecessary re-renders.  
-  - **Skeleton loading screens** for better UX during data fetch.  
+## What's Inside
 
-### 4. Implement Pagination  
-- Add pagination for the workers listing page.  
-- Each page should load a suitable number of items (e.g., 9–12 cards per page).  
+The app includes several key features:
 
-### 5. Service Filters  
-- Implement filters for workers based on **price/day** and **type of service**.  
-- Filters should work seamlessly with pagination.  
+- Browse workers by different service categories
+- Filter by price range and service type
+- Responsive design that works on mobile and desktop
+- Pagination to handle large lists of workers
+- Search and filtering capabilities
 
-### 6. Bug Fixes  
-- Identify and fix any existing issues in `page.tsx` or configuration files.  
-- Resolve console warnings or errors.  
-- Ensure clean and maintainable code following best practices.  
+## Tech Stack
 
-### 7. API Integration  
-- Currently, the workers’ data is being imported directly from `workers.json`.  
-- Your task is to **serve this data via /api/wprkers API route**.  
-- Update the frontend page to fetch this data using `fetch` (or any modern method such as `useEffect`, `useSWR`, or React Query).
-- Donot delete the existing data loading logic, comment it out.  
-- Implement:  
-  - **Loading state** (use skeleton screens).  
-  - **Error handling** (show a friendly error message if API fails).  
-  - **Basic caching or memoization** to prevent redundant calls.  
+- Next.js 15 with TypeScript
+- Tailwind CSS for styling
+- React hooks for state management
+- Custom API routes for data fetching
 
----
+## Project Structure
 
-## Expectations  
-- Use **TypeScript** and **Tailwind CSS** consistently.  
-- Follow **component-driven development** principles.  
-- Write **clean, readable, and reusable code**.  
-- Optimize for **performance and accessibility**.  
-- Maintain **Git commit history** (no single "final commit").  
+```
+src/
+├── app/
+│   ├── api/workers/     # API endpoints
+│   ├── page.tsx         # Main page
+│   └── layout.tsx       # App layout
+├── components/          # Reusable components
+├── hooks/              # Custom React hooks
+└── types/              # TypeScript definitions
+```
 
----
+## API
 
-## Deliverables  
-1. Fork the repo and work from a branch named: assignment/<your-full-name> (for example: assignment/adarsh-maurya).
-2. Implement improvements and features that demonstrate your mastery of the job requirements (UI polish, responsiveness, Tailwind usage, tests, accessibility, performance).
-3. Push your branch to GitHub, add a clear README, and (strongly recommended) deploy the app (Vercel/Netlify/GH Pages)
-3. Fill in the Google Form with your details for submission.
+The `/api/workers` endpoint supports filtering and pagination:
 
----
+- `?page=1` - Page number
+- `?limit=12` - Items per page
+- `?service=Plumber` - Filter by service
+- `?minPrice=200&maxPrice=800` - Price range filter
 
-## Evaluation Criteria  
-- Code quality, readability, and structure.  
-- UI/UX improvements and responsiveness.  
-- Correctness of functionality (filters, pagination, sticky navbar, optimisations).  
-- Debugging and problem-solving approach.  
-- Git usage and commit practices.  
-- Handling of API calls, loading states, and error cases.  
+## Development Notes
 
----
+Some improvements made during development:
 
-## Notes  
-- You are free to use libraries like **SWR** or **React Query**, but keep the implementation clean.  
-- Focus on **real-world production quality code**, not just quick fixes. 
-- Add comment for any **bug fix or optimization.** 
-- Document any **extra improvements** you make in your submission.
+- Fixed responsive grid layout issues
+- Added proper error handling and loading states
+- Implemented lazy loading for better performance
+- Added accessibility features for keyboard navigation
+- Optimized API calls to reduce redundant requests
 
-Good luck 🚀  
+## Building for Production
+
+```bash
+npm run build
+npm start
+```
+
+## Deployment
+
+The app can be deployed on Vercel, Netlify, or any platform that supports Next.js.
+
+For Vercel:
+1. Push to GitHub
+2. Connect your repository
+3. Deploy automatically
+
+## Browser Support
+
+Works on modern browsers including Chrome, Firefox, Safari, and Edge.
