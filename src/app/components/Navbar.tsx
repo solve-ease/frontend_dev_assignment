@@ -1,6 +1,4 @@
-// ============================================================================
 // NAVBAR COMPONENT
-// ============================================================================
 
 import React, { useState, useEffect, memo } from "react";
 import {
@@ -11,7 +9,7 @@ import {
   Phone,
 } from "lucide-react";
 
-const Navbar = memo(() => {
+export const Navbar = memo(() => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -118,4 +116,3 @@ const Navbar = memo(() => {
 });
 
 Navbar.displayName = "Navbar";
-export default Navbar;

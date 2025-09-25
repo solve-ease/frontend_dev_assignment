@@ -1,11 +1,9 @@
-// ============================================================================
 // PAGINATION COMPONENT
-// ============================================================================
 
 import React, { useCallback, memo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const Pagination = memo(
+export const Pagination = memo(
   ({
     currentPage,
     totalPages,
@@ -94,4 +92,3 @@ const Pagination = memo(
 
 Pagination.displayName = "Pagination";
 
-export default Pagination;

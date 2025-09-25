@@ -1,7 +1,5 @@
 
-// ============================================================================
 // WORKER CARD COMPONENT
-// ============================================================================
 
 import React, { useState, memo } from "react";
 import Image from "next/image";
@@ -12,7 +10,7 @@ import {
   
 } from "lucide-react";
 
-const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
+export const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -71,4 +69,3 @@ const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
 });
 
 WorkerCard.displayName = "WorkerCard";
-export default WorkerCard;

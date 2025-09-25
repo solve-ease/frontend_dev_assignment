@@ -1,7 +1,5 @@
 
-// ============================================================================
 // FILTERS COMPONENT
-// ============================================================================
 
 import React, { useEffect, useCallback, memo } from "react";
 
@@ -12,7 +10,7 @@ import {
 
 import { FilterState } from "@/types/workers";
 
-const Filters = memo(
+export const Filters = memo(
   ({
     filters,
     onFiltersChange,
@@ -219,5 +217,3 @@ const Filters = memo(
   }
 );
 Filters.displayName = "Filters";
-
-export default Filters;
