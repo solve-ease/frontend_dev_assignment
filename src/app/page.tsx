@@ -16,7 +16,6 @@ export default function WorkersPage() {
   const [priceMin, setPriceMin] = useState<number>(0)
   const [priceMax, setPriceMax] = useState<number>(100000)
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [erroredIds, setErroredIds] = useState<Set<number>>(new Set())
 
   const fetchWorkers = useCallback(async () => {
     setIsLoading(true)
@@ -139,14 +138,13 @@ export default function WorkersPage() {
               >
                 <div className='w-full aspect-[4/3] relative'>
                   <Image
-                    src={erroredIds.has(worker.id) ? '/next.svg' : worker.image}
+                    src={worker.image}
                     alt={worker.name}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover'
                     loading='lazy'
                     priority={false}
-                    onError={() => setErroredIds(prev => new Set(prev).add(worker.id))}
                   />
                 </div>
                 <div className='p-4'>
