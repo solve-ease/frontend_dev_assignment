@@ -33,27 +33,6 @@ Allows users to browse, filter, and paginate worker profiles, with loading skele
 
 ---
 
-## 📂 Project Structure
-
-src/
-├─ app/
-│ ├─ api/workers/route.ts # API endpoint for workers.json
-│ ├─ components/ # Reusable components
-│ │ ├─ Navbar.tsx
-│ │ ├─ Filters.tsx
-│ │ ├─ WorkerCard.tsx
-│ │ ├─ WorkerModal.tsx
-│ │ ├─ Pagination.tsx
-│ │ ├─ SkeletonCard.tsx
-│ │ └─ Footer.tsx
-│ └─ page.tsx # WorkersPage main screen
-├─ types/
-│ └─ workers.ts # Worker & filter types
-└─ workers.json # Mock worker dataset
-
-
----
-
 ## ⚡️ Getting Started
 
 ```bash

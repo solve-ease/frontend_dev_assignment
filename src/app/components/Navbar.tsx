@@ -1,9 +1,9 @@
-// NAVBAR 
+// NAVBAR
 
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState, memo, useRef } from "react";
-import { Menu, Home, Users, Info, Search } from "lucide-react";
+import { Menu, Home, Users, Info, Search, X } from "lucide-react";
 import { FaPeopleGroup } from "react-icons/fa6";
 
 type NavbarProps = {
@@ -92,14 +92,14 @@ export const Navbar = memo(
                 <span>Home</span>
               </Link>
               <Link
-                href="/workers"
+                href="/"
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Users className="w-4 h-4" />
                 <span>Workers</span>
               </Link>
               <Link
-                href="/about"
+                href="/"
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Info className="w-4 h-4" />
@@ -109,62 +109,80 @@ export const Navbar = memo(
 
             {/* Mobile toggle */}
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+              className={`md:hidden p-2 rounded-lg hover:bg-gray-100 transition-transform duration-200
+              ${isMobileMenuOpen ? "rotate-90" : "rotate-0"}`}
               onClick={() => setIsMobileMenuOpen((s) => !s)}
+              aria-expanded={isMobileMenuOpen}
               aria-label="Toggle navigation menu"
             >
-              <Menu className="w-6 h-6" />
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-gray-800" />
+              ) : (
+                <Menu className="w-6 h-6 text-gray-800" />
+              )}
             </button>
           </div>
 
           {/* Mobile menu + search */}
-          {isMobileMenuOpen && (
-            <div
-              ref={menuRef}
-              className="md:hidden mt-4 py-4 border-t border-gray-200 space-y-3 bg-white rounded-lg shadow-md"
-            >
-              <div>
-                <label className="sr-only" htmlFor="navbar-search-mobile">
-                  Search workers
-                </label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <input
-                    id="navbar-search-mobile"
-                    type="text"
-                    placeholder="Search by name or service…"
-                    value={localQuery}
-                    onChange={(e) => handleChange(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-3xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                  />
+          <div
+            ref={menuRef}
+            aria-hidden={!isMobileMenuOpen}
+            className={`md:hidden mt-2 overflow-hidden transition-all duration-300 ease-out
+              grid ${
+                isMobileMenuOpen
+                  ? "grid-rows-[1fr] opacity-100 translate-y-0"
+                  : "grid-rows-[0fr] opacity-0 -translate-y-2"
+              }`}
+          >
+            <div className="min-h-0">
+              <div className="mt-2 py-6 px-4 space-y-4 rounded-xl">
+                <div>
+                  <label className="sr-only" htmlFor="navbar-search-mobile">
+                    Search workers
+                  </label>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
+                    <input
+                      id="navbar-search-mobile"
+                      type="text"
+                      placeholder="Search by name or service…"
+                      value={localQuery}
+                      onChange={(e) => handleChange(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 
+                       rounded-xl border border-white/40
+                       bg-white/30 text-gray-900 
+                       placeholder-gray-500
+                       focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <nav className="space-y-2">
-                <Link
-                  href="/"
-                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2"
-                >
-                  <Home className="w-4 h-4" />
-                  <span>Home</span>
-                </Link>
-                <Link
-                  href="/workers"
-                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2"
-                >
-                  <Users className="w-4 h-4" />
-                  <span>Workers</span>
-                </Link>
-                <Link
-                  href="/about"
-                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2"
-                >
-                  <Info className="w-4 h-4" />
-                  <span>About</span>
-                </Link>
-              </nav>
+                <nav className="space-y-3">
+                  <Link
+                    href="/"
+                    className="flex items-center space-x-2 text-gray-900 hover:text-blue-600 font-medium"
+                  >
+                    <Home className="w-4 h-4" />
+                    <span>Home</span>
+                  </Link>
+                  <Link
+                    href="/"
+                    className="flex items-center space-x-2 text-gray-900 hover:text-blue-600 font-medium"
+                  >
+                    <Users className="w-4 h-4" />
+                    <span>Workers</span>
+                  </Link>
+                  <Link
+                    href="/"
+                    className="flex items-center space-x-2 text-gray-900 hover:text-blue-600 font-medium"
+                  >
+                    <Info className="w-4 h-4" />
+                    <span>About</span>
+                  </Link>
+                </nav>
+              </div>
             </div>
-          )}
+          </div>
         </div>
       </nav>
     );
