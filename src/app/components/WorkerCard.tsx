@@ -12,19 +12,19 @@ export const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
   return (
     <>
       <div
-        className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300 overflow-hidden group"
+        className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-gray-200 transition-all duration-300 overflow-hidden group cursor-pointer transform hover:scale-[1.02]"
         onClick={() => setIsModalOpen(true)}
       >
-        <div className="relative w-full h-48 overflow-hidden bg-gray-100">
+        <div className="relative w-full h-55 overflow-hidden bg-gray-100">
           {!imageLoaded && !imageError && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+              <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
             </div>
           )}
           {imageError ? (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gray-200 text-gray-500">
-              <AlertCircle className="w-8 h-8 mb-2" />
-              <span className="text-sm">Image not available</span>
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 text-gray-500">
+              <AlertCircle className="w-6 h-6 mb-1" />
+              <span className="text-xs">Image unavailable</span>
             </div>
           ) : (
             <Image
@@ -32,7 +32,7 @@ export const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
               alt={worker.name}
               fill
               unoptimized
-              className={`object-cover group-hover:scale-105 transition-transform duration-300 ${
+              className={`object-cover group-hover:scale-110 transition-all duration-500 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={() => setImageLoaded(true)}
@@ -41,34 +41,40 @@ export const WorkerCard = memo(({ worker }: { worker: WorkerType }) => {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           )}
-        </div>
-        <div className="p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-1">
-            {worker.name}
-          </h3>
-          <p className="text-gray-600 mb-3 capitalize text-sm">
-            {worker.service}
-          </p>
 
-          <div className="flex items-center justify-between mb-4">
-            <div className="text-left">
-              <span className="sm:text-xl lg:text-2xl font-bold text-green-600">
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+
+        <div className="p-4 space-y-3">
+          {/* Header Section */}
+          <div className="text-center space-y-1">
+            <h3 className="text-lg font-bold text-gray-900 line-clamp-1 group-hover:text-blue-600 transition-colors duration-200">
+              {worker.name}
+            </h3>
+            <p className="text-sm text-gray-600 capitalize">{worker.service}</p>
+          </div>
+
+          {/* Price Section */}
+          <div className="bg-gray-50 rounded-lg p-3 text-center group-hover:bg-blue-50 transition-colors duration-200">
+            <div className="flex items-baseline justify-center space-x-1">
+              <span className="text-lg font-bold text-green-600 group-hover:text-blue-600 transition-colors duration-200">
                 ₹{Math.round(worker.pricePerDay * 1.18).toLocaleString()}
               </span>
-              <span className="text-sm text-gray-500 ml-1">/ day</span>
+              <span className="text-sm text-gray-600">/ day</span>
             </div>
-            <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
-              +18% GST
-            </span>
+            <div className="text-xs text-gray-500 mt-1">+18% GST included</div>
           </div>
+
+          {/* Contact Button */}
           <button
             onClick={(e) => {
-              e.stopPropagation(); // prevent triggering the card's onClick
+              e.stopPropagation();
               alert(`Contacting ${worker.name}`);
             }}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors duration-200 font-medium text-sm cursor-pointer"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-4 rounded-lg transition-all duration-200 font-medium text-sm transform hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow-md cursor-pointer"
           >
-            Contact
+            Contact Worker
           </button>
         </div>
       </div>
