@@ -2,9 +2,9 @@ import Link from "next/link";
 import {
   FaFacebook,
   FaTwitter,
-  FaInstagramSquare,
   FaLinkedin,
 } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa6";
 import { FaPeopleGroup } from "react-icons/fa6";
 
 export default function Footer() {
@@ -89,7 +89,7 @@ export default function Footer() {
               <FaTwitter size={20} />
             </a>
             <a href="#" className="hover:text-white" target="_blank" rel="noopener noreferrer">
-              <FaInstagramSquare size={20} />
+              <FaInstagram size={20} />
             </a>
             <a href="#" className="hover:text-white" target="_blank" rel="noopener noreferrer">
               <FaLinkedin size={20} />

@@ -1,11 +1,8 @@
-
 // FILTERS COMPONENT
 
 import React, { useEffect, useCallback, memo } from "react";
 
-import {
-  X,
-} from "lucide-react";
+import { Search, X } from "lucide-react";
 
 import { FilterState } from "@/types/workers";
 
@@ -47,13 +44,21 @@ export const Filters = memo(
     if (!isVisible) return null;
 
     return (
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:relative lg:bg-transparent lg:block"
-        onClick={closeOnOutsideClick ? onClose : undefined} // only close when allowed (mobile)
-      >
-        {/* Panel */}
+      <div className="z-40 lg:relative lg:z-auto">
+        {/* ===== Mobile backdrop (blur + dim) ===== */}
         <div
-          className="fixed right-0 top-0 h-full w-80 bg-white shadow-xl overflow-y-auto lg:relative lg:w-full lg:shadow-none lg:bg-gray-50 lg:rounded-xl lg:p-6"
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity lg:hidden"
+          onClick={closeOnOutsideClick ? onClose : undefined}
+          aria-hidden="true"
+        />
+
+        {/* ===== Panel ===== */}
+        <div
+          className="
+        fixed right-0 top-0 h-full w-80 bg-white shadow-xl overflow-y-auto
+        lg:relative lg:w-full lg:shadow-none lg:bg-gray-50 lg:rounded-xl lg:p-6
+        transition-transform duration-300
+      "
           onClick={(e) => e.stopPropagation()}
         >
           <div className="p-6 lg:p-0">
@@ -69,11 +74,6 @@ export const Filters = memo(
             </div>
 
             <div className="space-y-6">
-              {/* Search */}
-              <div>
-                
-              </div>
-
               {/* Service Filter */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -182,7 +182,7 @@ export const Filters = memo(
                     searchQuery: "",
                   })
                 }
-                className="w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors duration-200 cursor-pointer"
+                className="w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors duration-200"
               >
                 Clear All Filters
               </button>
