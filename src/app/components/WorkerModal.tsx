@@ -45,8 +45,6 @@ export const WorkerModal = memo(({ worker, onClose }: WorkerModalProps) => {
         className="bg-white rounded-xl shadow-xl max-w-xs w-full mx-4 relative overflow-hidden"
         style={{
           animation: "modalSlideIn 0.3s ease-out",
-          "--tw-scale-x": "1",
-          "--tw-scale-y": "1",
         }}
       >
         <style jsx>{`
