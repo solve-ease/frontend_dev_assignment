@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   FaFacebook,
   FaTwitter,
@@ -28,24 +29,24 @@ export default function Footer() {
           <h3 className="text-white font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <a href="/" className="hover:text-white">
+              <Link href="/" className="hover:text-white">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/workers" className="hover:text-white">
+              <Link href="/workers" className="hover:text-white">
                 Workers
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/about" className="hover:text-white">
+              <Link href="/about" className="hover:text-white">
                 About
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/contact" className="hover:text-white">
+              <Link href="/contact" className="hover:text-white">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -81,16 +82,16 @@ export default function Footer() {
         <div>
           <h3 className="text-white font-semibold mb-3">Follow Us</h3>
           <div className="flex space-x-4">
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white" target="_blank" rel="noopener noreferrer">
               <FaFacebook size={20} />
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white" target="_blank" rel="noopener noreferrer">
               <FaTwitter size={20} />
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white" target="_blank" rel="noopener noreferrer">
               <FaInstagramSquare size={20} />
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white" target="_blank" rel="noopener noreferrer">
               <FaLinkedin size={20} />
             </a>
           </div>

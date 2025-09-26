@@ -1,9 +1,9 @@
-// NAVBAR
+// NAVBAR 
 
 "use client";
-
+import Link from "next/link";
 import React, { useEffect, useState, memo, useRef } from "react";
-import { Menu, Home, Users, Info, Phone, Search } from "lucide-react";
+import { Menu, Home, Users, Info, Search } from "lucide-react";
 import { FaPeopleGroup } from "react-icons/fa6";
 
 type NavbarProps = {
@@ -57,12 +57,12 @@ export const Navbar = memo(
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-3">
             {/* Brand */}
-            <a href="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2">
               <FaPeopleGroup className="w-7 h-7 text-black" />
               <span className="text-2xl font-bold text-gray-900">
                 WorkersHub
               </span>
-            </a>
+            </Link>
 
             {/* Search (Desktop) */}
             <div className="hidden md:block md:min-w-[420px]">
@@ -84,27 +84,27 @@ export const Navbar = memo(
 
             {/* Desktop nav */}
             <div className="hidden md:flex items-center space-x-6">
-              <a
-                href="#"
+              <Link
+                href="/"
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Home className="w-4 h-4" />
                 <span>Home</span>
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href="/workers"
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Users className="w-4 h-4" />
                 <span>Workers</span>
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href="/about"
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Info className="w-4 h-4" />
                 <span>About</span>
-              </a>
+              </Link>
             </div>
 
             {/* Mobile toggle */}
@@ -141,27 +141,27 @@ export const Navbar = memo(
               </div>
 
               <nav className="space-y-2">
-                <a
-                  href="#"
+                <Link
+                  href="/"
                   className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2"
                 >
                   <Home className="w-4 h-4" />
                   <span>Home</span>
-                </a>
-                <a
-                  href="#"
+                </Link>
+                <Link
+                  href="/workers"
                   className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2"
                 >
                   <Users className="w-4 h-4" />
                   <span>Workers</span>
-                </a>
-                <a
-                  href="#"
+                </Link>
+                <Link
+                  href="/about"
                   className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2"
                 >
                   <Info className="w-4 h-4" />
                   <span>About</span>
-                </a>
+                </Link>
               </nav>
             </div>
           )}
